@@ -1,0 +1,4 @@
+set windows library,playlist,outputs
+set window playlist
+
+highlight tab blackbg
