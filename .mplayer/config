@@ -1,0 +1,4 @@
+# Write your default config options here!
+use-filename-title=yes
+softvol=true
+volume=10
