@@ -6,10 +6,8 @@ fi
 
 xsetroot -cursor_name left_ptr
 feh --bg-center .background_image
-# Compositing effects. Works fine with nvidia driver 355.11 (GTX 460 card).
-compton -bcCf -i 0.8 -D 0 --shadow-blue 0.15 --inactive-dim 0.3 \
-    --paint-on-overlay --unredir-if-possible --backend glx --glx-no-stencil \
-    --glx-no-rebind-pixmap --vsync opengl-swc
+# Compositing effects.
+compton -bcCf -i 0.8 -D 0 --shadow-blue 0.15 --inactive-dim 0.3
 
 numlockx
 xscreensaver &
