@@ -1,0 +1,28 @@
+Config { font = "xft:Noto Sans: size=9:bold:antialias=true"
+    , alpha = 200
+-- Light gray background and dirty white foreground.
+    , bgColor = "#515151"
+    , fgColor = "#CCCCCC"
+-- Top left position.
+    , position = Static {xpos = 0, ypos=0, width = 1700, height = 20 }
+    , pickBroadest = False
+    , persistent = False
+    , lowerOnStart = True
+    , hideOnStart = False
+    , iconRoot = "."
+    , allDesktops = True
+    , overrideRedirect = True
+    , commands = [ Run MultiCpu ["-L","3","-H","50","--normal","#99CC99","--high","#F2777A"] 5
+        , Run MPD ["-t", "<statei>vol:<volume>% <artist> - <title> <bar>",
+                   "--", "-P", "►", "-S", " ■", "-Z", "‖"] 5
+        , Run Network "enp5s0" ["-L","0","-H","70","--normal","#99CC99","--high","#F2777A"] 10
+        , Run Memory ["-t","RAM: <usedratio>% (<used> Mb)"] 10
+        , Run Swap [ "-t","Swap: <used> Mb" ] 10
+        , Run Date "%a %d %B %Y %H:%M:%S" "date" 10
+        , Run Kbd []
+        , Run StdinReader
+    ]
+    , sepChar = "%"
+    , alignSep = "}{"
+    , template = " %StdinReader%}{ %mpd% <fc=#CCCCCC>%multicpu% </fc> <fc=#CCCCCC> | %memory% %swap% | %enp5s0%</fc> | <fc=#F99157>%date%</fc> <fc=#66CCCC> %kbd%</fc>"
+}
