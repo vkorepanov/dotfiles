@@ -2,8 +2,8 @@ Xcursor.theme: Vanilla-DMZ
 
 Xft.dpi: 100
 
-URxvt.font:     xft:bitstream vera sans mono:size=10:antialias=true
-URxvt.boldFont: xft:bitstream vera sans mono:bold:size=10:antialias=true
+URxvt.font:     xft:DejaVu Sans Mono:size=10:antialias=true
+URxvt.boldFont: xft:DejaVu Sans Mono:bold:size=10:antialias=true
 URxvt.intensityStyles: false
 URxvt.depth: 32
 URxvt.background: [80]#000000
