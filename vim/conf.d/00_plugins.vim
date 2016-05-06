@@ -6,7 +6,7 @@ call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
 
 " Project helpers.
-
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Allows to have a set of templates for new file creation. (E.g. C header
 " guards, shell script copyrights)
 Plugin 'aperezdc/vim-template'
@@ -16,20 +16,15 @@ Plugin 'fholgado/minibufexpl.vim'
 Plugin 'kien/ctrlp.vim'
 " The silver searcher.
 Plugin 'rking/ag.vim'
-" Filesystem explorer.
-Plugin 'scrooloose/nerdtree'
 " Git wrapper.
 Plugin 'tpope/vim-fugitive'
 " Vim scripts for vim-session.
 Plugin 'xolox/vim-misc'
 " Session management.
 Plugin 'xolox/vim-session'
-" Unused plugins.
-"Plugin 'SirVer/ultisnips'
-"Plugin 'benmills/vimux'
 
 " C/C++ helpers.
-
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Very usefull completer.
 Plugin 'Valloric/YouCompleteMe'
 " Light status bar.
@@ -42,8 +37,17 @@ Plugin 'derekwyatt/vim-protodef'
 Plugin 'majutsushi/tagbar'
 " Syntax checker.
 Plugin 'scrooloose/syntastic'
-" Unused.
-"Plugin 'vim-scripts/c.vim'
+
+" Other.
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Text filtering and alignment.
+Plugin 'godlygeek/tabular'
+" Vim motions on speed.
+Plugin 'easymotion/vim-easymotion'
+" Markdown vim mode.
+Plugin 'tpope/vim-markdown'
+" Simple quoting/parenthesizing.
+Plugin 'tpope/vim-surround'
 
 " All of your Plugins must be added before the following line.
 call vundle#end()            " required
@@ -56,12 +60,8 @@ let g:ycm_extra_conf_globlist = ['~/*']
 
 " Some vim-session settings.
 let g:session_autosave = 'yes'
-let g:session_autoload = 'yes'
+let g:session_autoload = 'no'
 let g:session_autosave_periodic = 5
-
-" Some NERDTree settings.
-let g:NERDTreeQuitOnOpen=1
-let NERDTreeShowHidden=1
 
 " Some MBE settings.
 let g:miniBufExplorerAutoStart = 0
