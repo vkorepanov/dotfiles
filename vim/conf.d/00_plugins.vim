@@ -18,6 +18,8 @@ Plugin 'kien/ctrlp.vim'
 Plugin 'rking/ag.vim'
 " Git wrapper.
 Plugin 'tpope/vim-fugitive'
+" gitk for Vim.
+Plugin 'gregsexton/gitv'
 " Vim scripts for vim-session.
 Plugin 'xolox/vim-misc'
 " Session management.
@@ -27,6 +29,8 @@ Plugin 'xolox/vim-session'
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Very usefull completer.
 Plugin 'Valloric/YouCompleteMe'
+" Generates config files for YouCompleteMe.
+Plugin 'rdnetto/YCM-Generator'
 " Light status bar.
 Plugin 'bling/vim-airline'
 " Easy switch between source and header files.
