@@ -1,0 +1,62 @@
+#!/usr/bin/env zsh
+#
+# .zshrc
+# Copyright (C) 2016 real <real93@live.ru>
+#
+# Distributed under terms of the MIT license.
+#
+
+# cd to zshrc
+pushd $(dirname $(readlink -f ~/.zshrc)) > /dev/null
+
+HISTFILE=~/.zsh_history
+HISTSIZE=1000
+SAVEHIST=1000
+# ctrl+w don't delete all to near space
+WORDCHARS=''@""
+
+zstyle ':completion:*' menu select
+zstyle ':completion:*' rehash true
+zstyle ':completion::complete:*' use-cache 1
+
+autoload -U compinit promptinit colors
+colors
+compinit
+promptinit; prompt gentoo
+
+for file in conf.d/*sh; do
+    source $file
+done
+
+popd > /dev/null
+
+# TODO: check plugin availability
+GIT_PROMPT_EXECUTABLE="haskell"
+source ~/.zsh/plugins/zsh-git-prompt/zshrc.sh
+
+# TODO: rewrite more gracefull
+export PROMPT=\
+"$BOLD_START"\
+"$FOREGROUND_START{blue}
+┌─────────────────"\
+"$FOREGROUND_STOP"\
+"%(0?.$FOREGROUND_START{green}☺.$FOREGROUND_START{red}$LAST_RETURN_STATUS)"\
+"$FOREGROUND_START{blue}
+├ $CURRENT_DIR_REPLACE_HOME "\
+"$FOREGROUND_STOP"\
+'$(git_super_status)'\
+"$FOREGROUND_START{blue}
+└─%(!.$FOREGROUND_START{red}.$FOREGROUND_START{green})"\
+"$USER_NAME@$MACHINE_HOSTNAME_FULL "\
+"$FOREGROUND_STOP"\
+"$FOREGROUND_START{blue}"\
+"$PRIVILEGES_SIGN "\
+"$FOREGROUND_STOP"\
+"$BOLD_STOP"
+
+# startx if we login on tty6
+[[ "$(tty)" = "/dev/tty6" ]] && exec startx
+
+if [ -z "$TMUX" ]; then
+    tmux
+fi
