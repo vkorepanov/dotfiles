@@ -23,8 +23,8 @@ map <F3> :set hls!<cr>
 map <F4> :write<CR>:FSHere<CR>
 
 " Some plugins shortcuts.
-nmap <silent> <leader>k :NERDTreeToggle<CR>
 nmap <leader>bf :MBEOpen<CR>:MBEFocus<CR>
+nmap <C-F> :CtrlSF <C-r><C-w>
 
 " Disable some keys.
 imap <silent> <up>       <nop>
