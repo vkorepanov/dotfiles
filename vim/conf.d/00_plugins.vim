@@ -24,6 +24,10 @@ Plugin 'gregsexton/gitv'
 Plugin 'xolox/vim-misc'
 " Session management.
 Plugin 'xolox/vim-session'
+" Finder in a separate window with ag.
+Plugin 'dyng/ctrlsf.vim'
+" Multiple cursors.
+Plugin 'terryma/vim-multiple-cursors'
 
 " C/C++ helpers.
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -41,6 +45,10 @@ Plugin 'derekwyatt/vim-protodef'
 Plugin 'majutsushi/tagbar'
 " Syntax checker.
 Plugin 'scrooloose/syntastic'
+" Additional Vim syntax highlighting for C++ (including C++11/14).
+Plugin 'octol/vim-cpp-enhanced-highlight'
+" Debug with gdb in split terminal window.
+Plugin 'vim-scripts/Conque-GDB'
 
 " Other.
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -52,6 +60,14 @@ Plugin 'easymotion/vim-easymotion'
 Plugin 'tpope/vim-markdown'
 " Simple quoting/parenthesizing.
 Plugin 'tpope/vim-surround'
+" Auto pairs.
+Plugin 'jiangmiao/auto-pairs'
+" Marks with git changes.
+Plugin 'airblade/vim-gitgutter'
+" Doxygen commentaries generator.
+Plugin 'vim-scripts/DoxygenToolkit.vim'
+" CSV table view.
+Plugin 'chrisbra/csv.vim'
 
 " All of your Plugins must be added before the following line.
 call vundle#end()            " required

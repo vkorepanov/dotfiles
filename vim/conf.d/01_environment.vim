@@ -17,5 +17,6 @@ set background=dark
 set keymap=russian-jcukenwin
 set iminsert=0
 set imsearch=0
+set cinoptions=N-s
 highlight lCursor guifg=NONE guibg=Cyan
 
