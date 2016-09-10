@@ -5,6 +5,9 @@ call vundle#begin()
 " Let Vundle manage Vundle, required.
 Plugin 'gmarik/Vundle.vim'
 
+" Solarized colors.
+Plugin 'altercation/vim-colors-solarized'
+
 " Project helpers.
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Allows to have a set of templates for new file creation. (E.g. C header

@@ -10,7 +10,7 @@ if &t_Co > 1 || has("gui_running")
   set hlsearch
 endif
 
-colorscheme Tomorrow-Night-Eighties
+colorscheme solarized
 set background=dark
 
 " Setup keymap and alternative input language.

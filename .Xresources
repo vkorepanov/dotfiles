@@ -6,55 +6,61 @@ URxvt.font:     xft:DejaVu Sans Mono:size=10:antialias=true
 URxvt.boldFont: xft:DejaVu Sans Mono:bold:size=10:antialias=true
 URxvt.intensityStyles: false
 URxvt.depth: 32
-URxvt.background: [80]#000000
 
-!TomorrowNightEighties color scheme
-#define t_background        #2d2d2d
-#define t_current_line      #393939
-#define t_selection         #515151
-#define t_foreground        #cccccc
-#define t_comment           #999999
-#define t_red               #f2777a
-#define t_orange            #f99157
-#define t_yellow            #ffcc66
-#define t_green             #99cc99
-#define t_aqua              #66cccc
-#define t_blue              #6699cc
-#define t_purple            #cc99cc
+! Solarized colors
+#define S_base03        #002b36
+#define S_base02        #073642
+#define S_base01        #586e75
+#define S_base00        #657b83
+#define S_base0         #839496
+#define S_base1         #93a1a1
+#define S_base2         #eee8d5
+#define S_base3         #fdf6e3
 
-*.foreground:   t_foreground
-*.background:   t_background
-*.cursorColor:  #aeafad
+*background:            S_base03
+*foreground:            S_base0
+*fadeColor:             S_base03
+*cursorColor:           S_base1
+*pointerColorBackground:S_base01
+*pointerColorForeground:S_base1
 
-! Black / Grey
-*.color0:       #000000
-*.color8:       #666666
+#define S_yellow        #b58900
+#define S_orange        #cb4b16
+#define S_red           #dc322f
+#define S_magenta       #d33682
+#define S_violet        #6c71c4
+#define S_blue          #268bd2
+#define S_cyan          #2aa198
+#define S_green         #859900
 
-! Red / Bright Red
-*.color1:       t_red
-*.color9:       #FF3334
+!! black dark/light
+*color0:                S_base02
+*color8:                S_base03
 
-! Green + Bright Green
-*.color2:       t_green
-*.color10:      #9ec400
+!! red dark/light
+*color1:                S_red
+*color9:                S_orange
 
-! Yellow (Orange) + Bright Yellow (Yellow)
-*.color3:       t_orange
-*.color11:      t_yellow
+!! green dark/light
+*color2:                S_green
+*color10:               S_base01
 
-! Blue + Bright Blue
-*.color4:       t_blue
-*.color12:      t_blue
+!! yellow dark/light
+*color3:                S_yellow
+*color11:               S_base00
 
-! Magenta (Purple) + Bright Magenta
-*.color5:       t_purple
-*.color13:      #b777e0
+!! blue dark/light
+*color4:                S_blue
+*color12:               S_base0
 
-! Cyan (Aqua) + Bright Cyan
-*.color6:       t_aqua
-*.color14:      #54ced6
+!! magenta dark/light
+*color5:                S_magenta
+*color13:               S_violet
 
-! Light Grey (Selection) + White (Current Line)
-*.color7:       t_selection
-*.color15:      t_current_line
+!! cyan dark/light
+*color6:                S_cyan
+*color14:               S_base1
 
+!! white dark/light
+*color7:                S_base2
+*color15:               S_base3
