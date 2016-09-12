@@ -39,7 +39,8 @@ Plugin 'Valloric/YouCompleteMe'
 " Generates config files for YouCompleteMe.
 Plugin 'rdnetto/YCM-Generator'
 " Light status bar.
-Plugin 'bling/vim-airline'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 " Easy switch between source and header files.
 Plugin 'derekwyatt/vim-fswitch'
 " Simple add implementation in cpp files based on content of the header file.
