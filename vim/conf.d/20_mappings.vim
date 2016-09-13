@@ -1,5 +1,9 @@
 let mapleader = ','
 
+" Open new tab by Ctrl+T, close by Ctrl+W after leader key.
+nmap <leader><C-t> :tabnew<CR>
+nmap <leader><C-w> :tabclose<CR>
+
 " Copy&paste to primary buffer.
 nnoremap <leader>y "+y
 nnoremap <leader>Y "+Y
