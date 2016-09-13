@@ -53,6 +53,8 @@ Plugin 'scrooloose/syntastic'
 Plugin 'octol/vim-cpp-enhanced-highlight'
 " Debug with gdb in split terminal window.
 Plugin 'vim-scripts/Conque-GDB'
+" Subvert command + case-correction by crs/crm/crc/cru.
+Plugin 'tpope/vim-abolish'
 
 " Other.
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -72,6 +74,8 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'vim-scripts/DoxygenToolkit.vim'
 " CSV table view.
 Plugin 'chrisbra/csv.vim'
+" Plugin to toggle, display and navigate marks.
+Plugin 'kshenoy/vim-signature'
 
 " All of your Plugins must be added before the following line.
 call vundle#end()            " required
