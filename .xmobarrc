@@ -1,8 +1,8 @@
 Config {
-    font = "xft:Tinos: size=10:regular:antialias=true"
-    , additionalFonts = [ "xft:Tinos: size=10:bold:antialias=true"
-                        , "xft:Tinos: size=10:italic:antialias=true"
-                        , "xft:Tinos: size=10:bold:italic:antialias=true"
+    font = "xft:DejaVu Serif: size=8:regular:antialias=true"
+    , additionalFonts = [ "xft:DejaVu Serif: size=8:bold:antialias=true"
+                        , "xft:DejaVu Serif: size=8:italic:antialias=true"
+                        , "xft:DejaVu Serif: size=8:bold:italic:antialias=true"
                         , "xft:DejaVu Sans Mono: size=10:regular:antialias=true"
                         ]
     , alpha = 200
