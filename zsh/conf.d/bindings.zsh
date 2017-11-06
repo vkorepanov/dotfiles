@@ -9,8 +9,8 @@
 # Just urxvt has different bindings.
 # To get key code you need to type 'cat' command and then press necessary key
 
-# vim behaviour
-bindkey -v
+# emacs behaviour
+bindkey -e
 # delete
 bindkey '^[[3~' delete-char
 # home

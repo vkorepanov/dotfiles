@@ -10,8 +10,8 @@
 pushd $(dirname $(readlink -f ~/.zshrc)) > /dev/null
 
 HISTFILE=~/.zsh_history
-HISTSIZE=1000
-SAVEHIST=1000
+HISTSIZE=100000
+SAVEHIST=100000
 # ctrl+w don't delete all to near space
 WORDCHARS=''@""
 
@@ -30,9 +30,9 @@ done
 
 popd > /dev/null
 
-# TODO: check plugin availability
 GIT_PROMPT_EXECUTABLE="haskell"
-source ~/.zsh/plugins/zsh-git-prompt/zshrc.sh
+export ANTIGEN_HS_OUT="$HOME/.zsh/plugins/workdir"
+source $HOME/.zsh/plugins/antigen-hs/init.zsh
 
 # TODO: rewrite more gracefull
 export PROMPT=\
@@ -57,6 +57,11 @@ export PROMPT=\
 # startx if we login on tty6
 [[ "$(tty)" = "/dev/tty6" ]] && exec startx
 
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+FZF_TMUX=1
+FZF_TMUX_HEIGHT='30%'
+
 if [ -z "$TMUX" ]; then
-    tmux
+    tmux attach
 fi
