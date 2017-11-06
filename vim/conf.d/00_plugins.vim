@@ -15,14 +15,14 @@ Plugin 'altercation/vim-colors-solarized'
 Plugin 'aperezdc/vim-template'
 " Simple window with all open buffers.
 Plugin 'fholgado/minibufexpl.vim'
-" Fuzzy finder binded to Ctrl+P.
-Plugin 'kien/ctrlp.vim'
-" The silver searcher.
-Plugin 'rking/ag.vim'
+" Fuzzy finder.
+Plugin 'junegunn/fzf'
+" The ripgrep
+Plugin 'jremmen/vim-ripgrep'
 " Git wrapper.
 Plugin 'tpope/vim-fugitive'
 " gitk for Vim.
-Plugin 'gregsexton/gitv'
+Plugin 'junegunn/gv.vim'
 " Vim scripts for vim-session.
 Plugin 'xolox/vim-misc'
 " Session management.
@@ -55,6 +55,8 @@ Plugin 'octol/vim-cpp-enhanced-highlight'
 Plugin 'vim-scripts/Conque-GDB'
 " Subvert command + case-correction by crs/crm/crc/cru.
 Plugin 'tpope/vim-abolish'
+" CMake projects.
+Plugin 'vhdirk/vim-cmake'
 
 " Other.
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -66,8 +68,6 @@ Plugin 'easymotion/vim-easymotion'
 Plugin 'tpope/vim-markdown'
 " Simple quoting/parenthesizing.
 Plugin 'tpope/vim-surround'
-" Auto pairs.
-Plugin 'jiangmiao/auto-pairs'
 " Marks with git changes.
 Plugin 'airblade/vim-gitgutter'
 " Doxygen commentaries generator.
@@ -76,6 +76,12 @@ Plugin 'vim-scripts/DoxygenToolkit.vim'
 Plugin 'chrisbra/csv.vim'
 " Plugin to toggle, display and navigate marks.
 Plugin 'kshenoy/vim-signature'
+" View vim registers.
+Plugin 'junegunn/vim-peekaboo'
+" Change buffer state without removing of windows layout.
+Plugin 'vim-scripts/bufkill.vim'
+" Enhanced terminal integration.
+Plugin 'wincent/terminus'
 
 " All of your Plugins must be added before the following line.
 call vundle#end()            " required
@@ -93,3 +99,7 @@ let g:session_autosave_periodic = 5
 
 " Some MBE settings.
 let g:miniBufExplorerAutoStart = 0
+
+" Template settings.
+let g:email='real93@live.ru'
+let g:username='Korepanov Vyacheslav'

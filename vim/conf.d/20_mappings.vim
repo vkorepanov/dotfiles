@@ -4,6 +4,8 @@ let mapleader = ','
 nmap <leader><C-t> :tabnew<CR>
 nmap <leader><C-w> :tabclose<CR>
 
+nmap <C-p> :FZF<CR>
+
 " Copy&paste to primary buffer.
 nnoremap <leader>y "+y
 nnoremap <leader>Y "+Y
