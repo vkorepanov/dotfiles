@@ -12,16 +12,25 @@ source $HELPERS_FILE
 
 is_var_empty $HOME && die '$HOME is empty.' 1
 
-pushd $(dirname "$0") > /dev/null
+mkdir -p "$HOME/.zsh/plugins/workdir"
+script_dir="$PWD/$(dirname $0)"
+safe_symlink "$script_dir/zlogin" "$HOME/.zlogin"
+safe_symlink "$script_dir/zshrc" "$HOME/.zshrc"
+safe_symlink "$script_dir/conf.d/" "$HOME/.zsh/conf.d"
+plugins_dir="$HOME/.zsh/plugins"
+safe_symlink "$script_dir/MyAntigen.hs" "$plugins_dir/MyAntigen.hs"
 
-mkdir -p $HOME/.zsh/conf.d
-call_install zshrc zlogin "$HOME/.zsh"
-call_install conf.d/* "$HOME/.zsh/conf.d"
+old_pwd="$PWD"
+antigen_hs_dir="$plugins_dir/antigen-hs"
+if [ -e "$antigen_hs_dir" ]; then
+    cd "$antigen_hs_dir"
+    git fetch && git rebase origin/master
+else
+    cd "$plugins_dir"
+    git clone https://github.com/Tarrasch/antigen-hs
+fi
 
-popd > /dev/null
-
-is_file_exists "$HOME/.zshrc" && backup_file "$HOME/.zshrc"
-ln -s "$HOME/.zsh/zshrc" "$HOME/.zshrc"
-
-is_file_exists "$HOME/.zlogin" && backup_file "$HOME/.zlogin"
-ln -s "$HOME/.zsh/zlogin" "$HOME/.zlogin"
+cd "$antigen_hs_dir"
+stack setup
+stack install
+cd "$old_pwd"

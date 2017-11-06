@@ -16,13 +16,13 @@ is_var_empty() {
 ## \brief Function returns true if the file exists.
 ## \param $1 Name of the file.
 ## \note If $1 is directory, result will be false (return 1).
-is_file_exists() {
-    [ -f "$1" ] && return 0 || return 1
+is_exists() {
+    [ -e "$1" ] && return 0 || return 1
 }
 
 ## \brief Function calls 'echo' and redirect its output to stderr.
 ## \param $@ String to print.
-echo_error() {
+echoer() {
     echo "$@" >&2
 }
 
@@ -33,20 +33,21 @@ die() {
     local MSG="$1"
     local EXIT_CODE="$2"
 
-    [ -n "$MSG" ] && echo_error $MSG
+    [ -n "$MSG" ] && echoer $MSG
     [ -n "$EXIT_CODE" ] && exit $EXIT_CODE || exit 0
 }
 
-## \brief Function calls 'install' command.
+## \brief Function makes a symbolic link.
 ##
-## Argumets '--compare' and '--backup=existing' will be added
-## to 'install' command.
-## \param $@ Sources and destination. Destination must be last.
-call_install() {
-    [ -z "$1" ] && return
-    local CMD="install --compare --backup=existing $@"
-    echo $CMD
-    $CMD
+## \param $1 Source file.
+## \param $2 Destination link name.
+## \note If a destination link file exists, it will be backuped.
+safe_symlink() {
+    [ $# -ne 2 ] && return
+    local src="$1"
+    local dst="$2"
+    is_exists "$dst" && backup_file "$dst"
+    ln -s "$src" "$dst"
 }
 
 ## \brief Function makes backup of the file.
@@ -58,11 +59,11 @@ call_install() {
 ## at the end. Examples: <filename>.old1, <filename>.old5, etc.
 backup_file() {
     local FILENAME="$1"
-    is_file_exists "$FILENAME" || return 0
+    is_exists "$FILENAME" || return 0
     local f="$FILENAME"
     local extension=".old"
     local i=""
-    while is_file_exists "$f$extension$i"; do
+    while is_exists "$f$extension$i"; do
         i=$((i + 1))
         echo $i
     done

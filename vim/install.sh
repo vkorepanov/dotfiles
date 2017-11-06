@@ -15,10 +15,11 @@ is_var_empty $HOME && die '$HOME is empty.' 1
 pushd $(dirname "$0") > /dev/null
 
 mkdir -p $HOME/.vim/conf.d
-call_install vimrc "$HOME/.vim"
-call_install conf.d/* "$HOME/.zsh/conf.d"
+safe_symlink vimrc "$HOME/.vim"
+safe_symlink conf.d/* "$HOME/.zsh/conf.d"
 
 popd > /dev/null
 
-is_file_exists "$HOME/.vimrc" && backup_file "$HOME/.vimrc"
+is_exists "$HOME/.vimrc" && backup_file "$HOME/.vimrc"
 ln -s "$HOME/.vim/vimrc" "$HOME/.vimrc"
+

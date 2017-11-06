@@ -15,9 +15,10 @@ is_var_empty $HOME && die '$HOME is empty.' 1
 pushd $(dirname "$0") > /dev/null
 
 mkdir -p $HOME/.tmux
-call_install *.conf "$HOME/.tmux"
+safe_symlink *.conf "$HOME/.tmux"
 
 popd > /dev/null
 
-is_file_exists "$HOME/.tmux.conf" && backup_file "$HOME/.tmux.conf"
+is_exists "$HOME/.tmux.conf" && backup_file "$HOME/.tmux.conf"
 ln -s "$HOME/.tmux/tmux.conf" "$HOME/.tmux.conf"
+
