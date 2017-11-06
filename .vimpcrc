@@ -1,4 +1,10 @@
 set windows library,playlist,outputs
 set window playlist
 
+set colour
+set hlsearch
+set ignorecase
+set incsearch
+set smartcase
+
 highlight tab blackbg
