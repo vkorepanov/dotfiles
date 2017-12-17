@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 # install.sh
-# Copyright (C) 2016 real <real@gentoo-real>
+# Copyright (C) 2016-2017 Vyacheslav Korepanov <real@gentoo-real>
 #
 # Distributed under terms of the MIT license.
 #
@@ -14,9 +14,7 @@ is_var_empty $HOME && die '$HOME is empty.' 1
 
 mkdir -p "$HOME/.zsh/plugins/workdir"
 script_dir="$PWD/$(dirname $0)"
-safe_symlink "$script_dir/zlogin" "$HOME/.zlogin"
-safe_symlink "$script_dir/zshrc" "$HOME/.zshrc"
-safe_symlink "$script_dir/conf.d/" "$HOME/.zsh/conf.d"
+safe_symlink "$script_dir/../.zshrc" "$HOME/.zshrc"
 plugins_dir="$HOME/.zsh/plugins"
 safe_symlink "$script_dir/MyAntigen.hs" "$plugins_dir/MyAntigen.hs"
 
