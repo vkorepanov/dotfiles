@@ -9,7 +9,9 @@
 import Data.Monoid
 import Graphics.X11.ExtraTypes.XF86
 import System.Exit
+import System.Process
 import XMonad
+import XMonad.Actions.SpawnOn
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageHelpers
@@ -67,7 +69,7 @@ defaultKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- Launch a terminal
     [ ((modm,               xK_Return), spawn $ XMonad.terminal conf)
     -- Launch chromium browser
-    , ((modm .|. shiftMask, xK_b     ), spawn "chromium")
+    , ((modm .|. shiftMask, xK_b     ), spawnChromium)
     -- Launch file manager by using xdg-open
     , ((modm,               xK_e     ), spawn "xdg-open ~/")
     -- Launch dmenu
@@ -112,6 +114,8 @@ defaultKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm              , xK_r     ), spawn "xmonad --recompile; xmonad --restart")
     -- Run xmessage with a summary of the default keybindings (useful for beginners)
     , ((modm .|. shiftMask, xK_slash ), spawn ("echo \"" ++ help ++ "\" | xmessage -file -"))
+    -- Lock the screen
+    , ((modm .|. shiftMask, xK_l     ), spawn "xscreensaver-command --lock")
     -- Sleep key. Then it pressed just disable a monitor.
     , ((0                 , xF86XK_Sleep), spawn "xset dpms force off")
     -- Multimedia "Play" key
@@ -177,7 +181,7 @@ defaultLayout = smartBorders tiled ||| noBorders Full
     delta   = 5/100
 
 -- Window rules
-defaultManageHook = composeAll
+defaultManageHook = manageSpawn <+> composeAll
     [ className =? "Chromium"       --> doShift webWs
     , className =? "Gimp"           --> doFloat
     , className =? "MPlayer"        --> doFloat
@@ -198,8 +202,44 @@ defaultEventHook = fullscreenEventHook <+> ewmhDesktopsEventHook
 -- Status bars and logging
 defaultLogHook = return ()
 
+withNotSpawnedProcess :: MonadIO m => String -> (String -> m ()) -> m ()
+withNotSpawnedProcess cmd f = do
+    pidofResult <- (liftIO $ readProcessWithExitCode "pidof" [head . words $ cmd] ""
+                         >>= (\(ec, _, _) -> return ec))
+    case pidofResult of
+        ExitSuccess -> return ()
+        _           -> f cmd
+
+-- TODO: implement search of processes and not run command if process already exists.
+spawnIfNoProcess :: MonadIO m => String -> m ()
+-- spawnIfNoProcess cmd = withNotSpawnedProcess cmd spawn
+spawnIfNoProcess = spawn
+
+spawnOnIfNoProcess :: WorkspaceId -> String -> X ()
+-- spawnOnIfNoProcess ws cmd = withNotSpawnedProcess cmd (spawnOn ws)
+spawnOnIfNoProcess = spawnOn
+
+chromiumExecutable = "google-chrome-beta"
+
+spawnChromium :: X ()
+spawnChromium = spawnOnIfNoProcess webWs $ chromiumExecutable
+    ++ " --enable-native-gpu-memory-buffers --enable-features=\"CheckerImaging\""
+
 -- Startup hook
-defaultStartupHook = setWMName "LG3D"
+defaultStartupHook = do
+    setWMName "LG3D"
+    spawnIfNoProcess "feh --bg-center .background_image"
+    spawnIfNoProcess "xsetroot -cursor_name left_ptr"
+    -- Compositing effects.
+    spawnIfNoProcess "compton -bcCf -i 0.8 -D 0 --shadow-blue 0.15 --inactive-dim 0.3"
+    spawnChromium
+    spawnIfNoProcess "stalonetray"
+    spawnIfNoProcess "numlockx"
+    spawnIfNoProcess "xscreensaver"
+    spawnIfNoProcess "sleep 1 && transset -n stalonetray 0.784314"
+    spawnOnIfNoProcess "2"     "telegram-desktop"
+    spawnOnIfNoProcess gamesWs "steam"
+    spawnOnIfNoProcess infoWs  "nvidia-settings"
 
 defaultXmobarPP = xmobarPP
     { ppCurrent = xmobarColor xmobarCurrentWorkspaceColor "" . wrap "<fn=3>[" "]</fn>"
