@@ -75,10 +75,10 @@ source $HOME/.zsh/plugins/antigen-hs/init.zsh
 # 1) Status code of last executed command.
 # 2) Current directory and git status info.
 # 3) user@host info.
-export PROMPT="$fg[blue]
-┌─────────────────%(0?.$fg[green]☺.$fg_bold[red]%?)$fg[blue]
-├ $fg_bold[blue]%~ $fg[default]"'$(git_super_status)'"$fg[blue]
-└─%(!.$fg[red].$fg[green])%n@%M$fg[blue] %# "
+export PROMPT=$'%{$fg[blue]%}
+┌─────────────────%(0?.%{$fg[green]%}☺.%{$fg_bold[red]%}%?)%{$fg[blue]%}
+├ %{$fg_bold[blue]%}%~ %{$fg[default]%}$(git_super_status)%{$fg[blue]%}
+└─%(!.%{$fg[red]%}.%{$fg[green]%})%n@%M%{$fg[blue]%} %#%{$fg[default]%}%{$reset_color%} '
 
 # startx if we login on tty6
 [[ "$(tty)" = "/dev/tty6" ]] && exec startx
