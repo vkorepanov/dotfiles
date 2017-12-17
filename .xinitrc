@@ -4,21 +4,26 @@ if [ -f ~/.Xresources ]; then
     xrdb ~/.Xresources
 fi
 
-xsetroot -cursor_name left_ptr
-feh --bg-center .background_image
-# Compositing effects.
-compton -bcCf -i 0.8 -D 0 --shadow-blue 0.15 --inactive-dim 0.3
-
-numlockx
-xscreensaver &
-skype &
-nvidia-settings &
-ksysguard &
-stalonetray &
-chromium &
-steam &
-# Xmobar has transparency (200/255). Stalonetray needs to be transparent too.
-sleep 1 && transset -n stalonetray 0.784314 &
+# Test compton with GLX interface. With nvidia it didn't work properly :(
+# compton
+#   -D 5        # Fade effect, ms
+#   -m 0.9      # Opacity for dropdown and popup menus.
+#   -c          # Enable shadows.
+#   -C          # Avoid shadows on dock/panel windows.
+#   -f          # Fade windows in/out when opening/closing
+#   -i 0.85     # Opacity of inactive windows.
+#   -G          # No shadows on dnd windows.
+#   -b          # Daemonize.
+#   --shadow-blue 0.15
+#   --inactive-dim 0.3
+#   --vsync opengl-mswc
+#   --paint-on-overlay
+#   --sw-opti
+#   --backend glx
+#   --glx-no-stencil
+#   --glx-no-rebind-pixmap
+#   --glx-swap-method buffer-age
+#   --glx-use-gpushader4
 
 exec ck-launch-session xmonad
 
