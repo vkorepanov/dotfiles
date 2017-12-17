@@ -1,11 +1,12 @@
 Xcursor.theme: Vanilla-DMZ
 
-Xft.dpi: 100
+Xft.dpi: 102
 
 URxvt.font:     xft:DejaVu Sans Mono:size=10:antialias=true
 URxvt.boldFont: xft:DejaVu Sans Mono:bold:size=10:antialias=true
 URxvt.intensityStyles: false
 URxvt.depth: 32
+URxvt*disallowedWindowOps: 20,21,SetXprop
 
 ! Solarized colors
 #define S_base03        #002b36
