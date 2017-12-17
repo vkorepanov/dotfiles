@@ -10,9 +10,6 @@ if has("autocmd")
   " Auto source vimrc after write to it.
   autocmd! BufWritePost $MYVIMRC source $MYVIMRC
 
-  " Remove all trailing whitespaces.
-  autocmd BufWritePre * :%s/\s\+$//e
-
   " For all text files set 'textwidth' to 78 characters.
   autocmd FileType text setlocal textwidth=78
 
