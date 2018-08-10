@@ -121,7 +121,7 @@ defaultKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- Multimedia "Play" key
     , ((0                 , xF86XK_AudioPlay), spawn "mpc toggle")
     -- Multimedia "Mute" key
-    , ((0                 , xF86XK_AudioMute), spawn "amixer set Master toggle")
+    , ((0                 , xF86XK_AudioMute), spawn "amixer --device pulse set Master toggle")
     -- Meta + "Mute"
     , ((modm              , xF86XK_AudioMute), spawn "amixer --device pulse set Master 46%")
     -- Multimedia "Previous" key
@@ -219,7 +219,7 @@ spawnOnIfNoProcess :: WorkspaceId -> String -> X ()
 -- spawnOnIfNoProcess ws cmd = withNotSpawnedProcess cmd (spawnOn ws)
 spawnOnIfNoProcess = spawnOn
 
-chromiumExecutable = "google-chrome-beta"
+chromiumExecutable = "google-chrome"
 
 spawnChromium :: X ()
 spawnChromium = spawnOnIfNoProcess webWs $ chromiumExecutable
