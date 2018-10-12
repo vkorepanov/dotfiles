@@ -2,10 +2,24 @@
 
 set -e
 
+make_path() {
+    local path="$1"
+    if [ -e "$path" ]; then
+        if [ -d "$path" ]; then
+            return 0
+        else
+            echo "Can't create directory \"$path\": file exists" >&2
+            return 1
+        fi
+    else
+        mkdir -p "$HOME/.tmux/plugins"
+    fi
+}
+
 make_link() {
     local src="$1"
     local dst="${2:-$src}"
-    ln -s "$PWD/$src" "$HOME/$dst"
+    ln -fs "$PWD/$src" "$HOME/$dst"
 }
 
 main() {
@@ -19,11 +33,11 @@ main() {
         esac
     done
 
-    mkdir -p "$HOME/.tmux/plugins"
-    mkdir -p "$HOME/.vim/bundle"
-    mkdir -p "$HOME/.vim/swap"
-    mkdir -p "$HOME/.xmonad"
-    mkdir -p "$HOME/.zsh/plugins"
+    make_path "$HOME/.tmux/plugins"
+    make_path "$HOME/.vim/bundle"
+    make_path "$HOME/.vim/swap"
+    make_path "$HOME/.xmonad"
+    make_path "$HOME/.zsh/plugins"
 
     if [ -z "$links_only" ]; then
         git clone https://github.com/Tarrasch/antigen-hs "$HOME/.zsh/plugins/antigen-hs"
