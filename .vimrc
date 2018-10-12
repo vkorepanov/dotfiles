@@ -66,6 +66,8 @@ Plugin 'tpope/vim-abolish'
 " CMake projects.
 Plugin 'vhdirk/vim-cmake'
 
+Plugin 'bumaociyuan/vim-swift'
+
 " Other.
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Text filtering and alignment.
