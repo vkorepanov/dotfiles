@@ -10,7 +10,7 @@ Config {
     , bgColor = "#515151"
     , fgColor = "#CCCCCC"
 -- Top left position.
-    , position = Static {xpos = 0, ypos=0, width = 1700, height = 20 }
+    , position = Static {xpos = 0, ypos=0, width = 3510, height = 30 }
     , pickBroadest = False
     , persistent = False
     , lowerOnStart = True
@@ -35,7 +35,7 @@ Config {
             , "-S", "<fn=4><fc=#f2777a>■</fc></fn>"
             , "-Z", "<fn=4><fc=#ffcc66>‖</fc></fn>"
             ] 5
-        , Run Network "enp5s0" [ "-L", "0"
+        , Run Network "enp7s0" [ "-L", "0"
                                , "-H", "70"
                                , "--normal", "#99CC99"
                                , "--high","#F2777A"
@@ -50,5 +50,5 @@ Config {
     ]
     , sepChar = "%"
     , alignSep = "}{"
-    , template = " %StdinReader%}{%mpd% %multicpu% | %memory% %swap% | %enp5s0%| %date%  %kbd%"
+    , template = " %StdinReader%}{%mpd% %multicpu% | %memory% %swap% | %enp7s0%| %date%  %kbd%"
 }

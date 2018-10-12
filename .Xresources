@@ -1,6 +1,6 @@
-Xcursor.theme: Vanilla-DMZ
+Xcursor.theme: DMZ-White
 
-Xft.dpi: 102
+Xft.dpi: 163
 
 URxvt.font:     xft:DejaVu Sans Mono:size=10:antialias=true
 URxvt.boldFont: xft:DejaVu Sans Mono:bold:size=10:antialias=true
