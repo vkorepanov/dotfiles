@@ -83,7 +83,7 @@ export PROMPT=$'%{$fg[blue]%}
 export PATH="$PATH:$HOME/.local/bin:/root/.cargo/bin"
 
 # startx if we login on tty6
-[[ "$(tty)" = "/dev/tty6" ]] && exec startx
+[[ "$(tty)" = "/dev/tty1" ]] && exec startx
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
