@@ -219,7 +219,7 @@ spawnOnIfNoProcess :: WorkspaceId -> String -> X ()
 -- spawnOnIfNoProcess ws cmd = withNotSpawnedProcess cmd (spawnOn ws)
 spawnOnIfNoProcess = spawnOn
 
-chromiumExecutable = "google-chrome"
+chromiumExecutable = "google-chrome-beta"
 
 spawnChromium :: X ()
 spawnChromium = spawnOnIfNoProcess webWs $ chromiumExecutable
