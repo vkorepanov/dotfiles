@@ -14,7 +14,7 @@ call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
 
 " Solarized colors.
-Plugin 'altercation/vim-colors-solarized'
+" Plugin 'altercation/vim-colors-solarized'
 
 " Project helpers.
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -129,7 +129,7 @@ if &t_Co > 1 || has("gui_running")
   set hlsearch
 endif
 
-colorscheme solarized
+colorscheme Tomorrow-Night-Eighties
 set background=dark
 
 " Setup keymap and alternative input language.
