@@ -228,7 +228,7 @@ spawnChromium = spawnOnIfNoProcess webWs $ chromiumExecutable
 -- Startup hook
 defaultStartupHook = do
     setWMName "LG3D"
-    spawnIfNoProcess "feh --bg-center .background_image"
+    spawnIfNoProcess "feh --bg-fill .background_image"
     spawnIfNoProcess "xsetroot -cursor_name left_ptr"
     -- Compositing effects.
     spawnIfNoProcess "compton -bcCf -i 0.8 -D 0 --shadow-blue 0.15 --inactive-dim 0.3"
