@@ -19,7 +19,7 @@ zstyle ':completion::complete:*' use-cache 1
 autoload -U compinit promptinit colors
 colors
 compinit
-promptinit; prompt gentoo
+promptinit #; prompt gentoo
 
 ##############################################################################
 # Aliases
