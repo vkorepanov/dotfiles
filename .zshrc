@@ -80,7 +80,7 @@ export PROMPT=$'%{$fg[blue]%}
 ├ %{$fg_bold[blue]%}%~ %{$fg[default]%}$(git_super_status)%{$fg[blue]%}
 └─%(!.%{$fg[red]%}.%{$fg[green]%})%n@%M%{$fg[blue]%} %#%{$fg[default]%}%{$reset_color%} '
 
-export PATH="$PATH:$HOME/.local/bin:/root/.cargo/bin"
+export PATH="$PATH:$HOME/.local/bin:/root/.cargo/bin:/$HOME/.cargo/bin"
 
 # startx if we login on tty6
 [[ "$(tty)" = "/dev/tty1" ]] && exec startx
