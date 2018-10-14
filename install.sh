@@ -12,11 +12,11 @@ make_path() {
             return 1
         fi
     else
-        mkdir -p "$HOME/.tmux/plugins"
+        mkdir -p "$path"
     fi
 }
 
-make_link() {
+make_link_in_home() {
     local src="$1"
     local dst="${2:-$src}"
     ln -fs "$PWD/$src" "$HOME/$dst"
@@ -45,17 +45,18 @@ main() {
         git clone https://github.com/tmux-plugins/tpm "$HOME/.tmux/plugins/tpm"
     fi
 
-    make_link .Xresources
-    make_link .mplayer
-    make_link .stalonetrayrc
-    make_link .vimpcrc
-    make_link .vimrc
-    make_link .xinitrc
-    make_link .xmobarrc
-    make_link .zshrc
-    make_link tmux/tmux.conf .tmux.conf
-    make_link xmonad/xmonad.hs .xmonad/xmonad.hs
-    make_link zsh/MyAntigen.hs .zsh/plugins
+    make_link_in_home .Xresources
+    make_link_in_home .mplayer
+    make_link_in_home .stalonetrayrc
+    make_link_in_home .vimpcrc
+    make_link_in_home .vimrc
+    make_link_in_home .xinitrc
+    make_link_in_home .xmobarrc
+    make_link_in_home .zshrc
+    make_link_in_home alacritty/alacritty.yml .config/alacritty/alacritty.yml
+    make_link_in_home tmux/tmux.conf .tmux.conf
+    make_link_in_home xmonad/xmonad.hs .xmonad/xmonad.hs
+    make_link_in_home zsh/MyAntigen.hs .zsh/plugins
 }
 
 main "$@"
