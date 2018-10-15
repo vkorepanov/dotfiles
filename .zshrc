@@ -80,6 +80,10 @@ export PROMPT=$'%{$fg[blue]%}
 ├ %{$fg_bold[blue]%}%~ %{$fg[default]%}$(git_super_status)%{$fg[blue]%}
 └─%(!.%{$fg[red]%}.%{$fg[green]%})%n@%M%{$fg[blue]%} %#%{$fg[default]%}%{$reset_color%} '
 
+if [[ "$TERM" = dumb ]]; then
+    unset zle_bracketed_paste
+fi
+
 export PATH="$PATH:$HOME/.local/bin:/root/.cargo/bin:/$HOME/.cargo/bin"
 
 # startx if we login on tty6
@@ -87,8 +91,10 @@ export PATH="$PATH:$HOME/.local/bin:/root/.cargo/bin:/$HOME/.cargo/bin"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-FZF_TMUX=1
-FZF_TMUX_HEIGHT='30%'
+export FZF_TMUX=1
+export FZF_TMUX_HEIGHT='30%'
+export FZF_DEFAULT_COMMAND='fd --type f'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 if [ -z "$TMUX" ]; then
     tmux attach
