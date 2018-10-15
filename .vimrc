@@ -94,6 +94,10 @@ Plugin 'vim-scripts/bufkill.vim'
 " Enhanced terminal integration.
 Plugin 'wincent/terminus'
 
+if has('mac')
+    Plugin 'gfontenot/vim-xcode'
+endif
+
 " All of your Plugins must be added before the following line.
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -112,8 +116,8 @@ let g:session_autosave_periodic = 5
 let g:miniBufExplorerAutoStart = 0
 
 " Template settings.
-let g:email='real93@live.ru'
-let g:username='Korepanov Vyacheslav'
+let g:email=system('git config user.email')
+let g:username=system('git config user.name')
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
