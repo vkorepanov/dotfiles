@@ -25,8 +25,13 @@ promptinit #; prompt gentoo
 # Aliases
 ##############################################################################
 
-# ls output with colors, directories first, with indicators
-alias ls='ls --color=auto --group-directories-first --classify'
+# ls output with colors
+if [ "$(uname)" = "Linux" ]; then
+    alias ls='ls --color=auto --group-directories-first --classify'
+else
+    alias ls='ls -G'
+fi
+
 alias grep='grep --color=auto'
 
 ##############################################################################
