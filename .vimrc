@@ -39,6 +39,7 @@ Plugin 'xolox/vim-session'
 Plugin 'dyng/ctrlsf.vim'
 " Multiple cursors.
 Plugin 'terryma/vim-multiple-cursors'
+Plugin 'Chiel92/vim-autoformat'
 
 " C/C++ helpers.
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -134,12 +135,9 @@ endif
 colorscheme Tomorrow-Night-Eighties
 set background=dark
 
-" Setup keymap and alternative input language.
-set keymap=russian-jcukenwin
 set iminsert=0
 set imsearch=0
-set cinoptions=N-s
-highlight lCursor guifg=NONE guibg=Cyan
+set cinoptions=N-sg0
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Autocommands
@@ -212,6 +210,7 @@ map <F4> :write<CR>:FSHere<CR>
 " Some plugins shortcuts.
 nmap <leader>bf :MBEOpen<CR>:MBEFocus<CR>
 nmap <C-F> :CtrlSF <C-r><C-w>
+nmap <leader>af :Autoformat<CR>
 
 " Disable some keys.
 imap <silent> <up>       <nop>
@@ -260,19 +259,11 @@ if has('unnamedplus')
 else
     set clipboard=unnamed   " copy all to clipboard
 endif
+
 set cmdheight=2         " height of command line
 set copyindent          " make 'autoindent' use existing indent structure
 set cursorline          " highlight the screen line of the cursor
 set directory=~/.vim/swap
-set fileencoding=utf-8  " encoding for a local file
-set fileencodings=utf8,koi8r,cp1251,cp866,ucs-2le   " список предполагаемых кодировок, в порядке предпочтения
-set fileformat=unix     " eol format
-set fileformats=unix,dos
-set foldcolumn=2        " width of the column with folds
-set history=50          " keep 50 lines of command line history
-set ignorecase          " ignore case when using a search pattern
-set infercase           " adjust case of match for keyword completion
-set incsearch           " do incremental searching
 set expandtab           " expand <Tab> to spaces in Insert mode
 set fileencoding=utf-8  " encoding for a local file
 set fileencodings=utf8,koi8r,cp1251,cp866,ucs-2le   " список предполагаемых кодировок, в порядке предпочтения
@@ -280,12 +271,12 @@ set fileformat=unix     " eol format
 set fileformats=unix,dos
 set foldcolumn=2        " width of the column with folds
 set hidden
-set history=50          " keep 50 lines of command line history
+set history=5000        " keep 5000 lines of command line history
 set ignorecase          " ignore case when using a search pattern
-set infercase           " adjust case of match for keyword completion
 set incsearch           " do incremental searching
-set linebreak
+set infercase           " adjust case of match for keyword completion
 set laststatus=2        " always show window statusline
+set linebreak
 set list                " show tabs, trail spaces and other symbols
 set listchars=tab:>·,trail:-,extends:},precedes:{,nbsp:%
 set matchpairs=(:),{:},[:],<:>,"/*":"*/"    " pairs that match for `%`
@@ -310,13 +301,12 @@ set smarttab            " a <Tab> in an indent inserts 'shiftwidth' spaces
 set softtabstop=4       " number of spaces to insert for a <Tab>
 set spelllang=en_us,ru_yo
 set tabstop=8           " number of spaces a <Tab> in the text stands for
-set undofile
 set undodir=~/.vim/undo
+set undofile
 set undolevels=10000    " maximum number of changes that can be undone
 set visualbell          " disable beeping
 set wildignorecase      " ignore case when completing file names
 set wildmenu            " command-line completion shows a list of matches
-
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,moc_*.cpp,*.moc,*.o,qrc_*.cpp,*.pro.user*
 
 set colorcolumn=80
