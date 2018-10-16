@@ -24,7 +24,7 @@ import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
 
 defaultTerminal :: String
-defaultTerminal = "urxvt"
+defaultTerminal = "alacritty"
 
 -- Don't focus windows by mouse cursor. Explicit focus by clicking on the window
 isFocusFollowsMouse :: Bool
@@ -277,7 +277,7 @@ help = unlines [
     "The default modifier key is 'meta'. Default keybindings:"
   , ""
   , "-- launching and killing programs"
-  , "mod-Enter          Launch urxvt"
+  , "mod-Enter          Launch terminal"
   , "mod-d              Launch dmenu"
   , "mod-Shift-d        Launch gmrun"
   , "mod-Shift-c        Close/kill the focused window"
