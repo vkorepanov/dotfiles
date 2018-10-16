@@ -66,7 +66,16 @@ Plugin 'vim-scripts/Conque-GDB'
 Plugin 'tpope/vim-abolish'
 " CMake projects.
 Plugin 'vhdirk/vim-cmake'
+Plugin 'jeaye/color_coded'
 
+" Web
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Pug autocomplete.
+Plugin 'dNitro/vim-pug-complete'
+Plugin 'digitaltoad/vim-pug'
+
+" Swift
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 Plugin 'bumaociyuan/vim-swift'
 
 " Other.
