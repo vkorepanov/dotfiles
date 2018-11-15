@@ -41,6 +41,8 @@ Plugin 'dyng/ctrlsf.vim'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'Chiel92/vim-autoformat'
 
+Plugin 'Shougo/deoplete.nvim'
+
 " C/C++ helpers.
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Very usefull completer.
@@ -57,16 +59,22 @@ Plugin 'derekwyatt/vim-protodef'
 " Browse the tags of the current file. (E.g. variables, functions, etc.)
 Plugin 'majutsushi/tagbar'
 " Syntax checker.
-Plugin 'scrooloose/syntastic'
+Plugin 'vim-syntastic/syntastic'
 " Additional Vim syntax highlighting for C++ (including C++11/14).
 Plugin 'octol/vim-cpp-enhanced-highlight'
 " Debug with gdb in split terminal window.
-Plugin 'vim-scripts/Conque-GDB'
+if !has('mac')
+    Plugin 'vim-scripts/Conque-GDB'
+endif
 " Subvert command + case-correction by crs/crm/crc/cru.
 Plugin 'tpope/vim-abolish'
 " CMake projects.
 Plugin 'vhdirk/vim-cmake'
-Plugin 'jeaye/color_coded'
+if has('nvim')
+    Plugin 'arakashic/chromatica.nvim'
+else
+    Plugin 'jeaye/color_coded'
+endif
 
 " Web
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -76,7 +84,11 @@ Plugin 'digitaltoad/vim-pug'
 
 " Swift
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-Plugin 'bumaociyuan/vim-swift'
+Plugin 'kballard/vim-swift'
+Plugin 'keith/swift.vim'
+if has('nvim')
+    Plugin 'mitsuse/autocomplete-swift'
+endif
 
 " Other.
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -128,6 +140,21 @@ let g:miniBufExplorerAutoStart = 0
 let g:email=system('git config user.email')
 let g:username=system('git config user.name')
 
+" Syntastic settings
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+" Chromatica
+if has('mac')
+    let g:chromatica#libclang_path='/usr/local/opt/llvm/lib'
+endif
+let g:chromatica#enable_at_startup=1
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Environment settings
@@ -293,8 +320,10 @@ set linebreak
 set list                " show tabs, trail spaces and other symbols
 set listchars=tab:>·,trail:-,extends:},precedes:{,nbsp:%
 set matchpairs=(:),{:},[:],<:>,"/*":"*/"    " pairs that match for `%`
-set maxmem=4096         " max amount of memory in Kb used for one buffer
-set maxmemtot=65536     " max amount of memory in Kb used for all buffers
+if !has('nvim')
+    set maxmem=4096         " max amount of memory in Kb used for one buffer
+    set maxmemtot=65536     " max amount of memory in Kb used for all buffers
+endif
 set number              " numbers at the left side
 set relativenumber      " relative numbers
 set ruler               " show the cursor position all the time
