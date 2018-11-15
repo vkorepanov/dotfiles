@@ -172,7 +172,7 @@ if &t_Co > 1 || has("gui_running")
   set hlsearch
 endif
 
-colorscheme Tomorrow-Night-Eighties
+colorscheme Tomorrow-Night
 set background=dark
 
 set iminsert=0
