@@ -219,7 +219,7 @@ spawnOnIfNoProcess :: WorkspaceId -> String -> X ()
 -- spawnOnIfNoProcess ws cmd = withNotSpawnedProcess cmd (spawnOn ws)
 spawnOnIfNoProcess = spawnOn
 
-chromiumExecutable = "google-chrome-beta"
+chromiumExecutable = "chromium-browser"
 
 spawnChromium :: X ()
 spawnChromium = spawnOnIfNoProcess webWs $ chromiumExecutable
@@ -237,7 +237,7 @@ defaultStartupHook = do
     spawnIfNoProcess "numlockx"
     spawnIfNoProcess "xscreensaver"
     spawnIfNoProcess "sleep 1 && transset -n stalonetray 0.784314"
-    spawnOnIfNoProcess "2"     "telegram-desktop"
+    spawnOnIfNoProcess "2"     "Telegram"
     spawnOnIfNoProcess gamesWs "steam"
     spawnOnIfNoProcess infoWs  "nvidia-settings"
 
