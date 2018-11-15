@@ -40,9 +40,9 @@ main() {
     make_path "$HOME/.zsh/plugins"
 
     if [ -z "$links_only" ]; then
-        git clone https://github.com/Tarrasch/antigen-hs "$HOME/.zsh/plugins/antigen-hs"
-        git clone https://github.com/VundleVim/Vundle.vim "$HOME/.vim/bundle/Vundle.vim"
-        git clone https://github.com/tmux-plugins/tpm "$HOME/.tmux/plugins/tpm"
+        git clone https://github.com/Tarrasch/antigen-hs "$HOME/.zsh/plugins/antigen-hs" || true
+        git clone https://github.com/VundleVim/Vundle.vim "$HOME/.vim/bundle/Vundle.vim" || true
+        git clone https://github.com/tmux-plugins/tpm "$HOME/.tmux/plugins/tpm" || true
     fi
 
     make_link_in_home .Xresources
