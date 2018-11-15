@@ -19,6 +19,7 @@ bundles =
       }
     , bundle "ael-code/zsh-colored-man-pages"
     , bundle "popstas/zsh-command-time"
+    , bundle "zsh-users/zsh-autosuggestions"
     ]
 
 config = defaultConfig { plugins = bundles }
