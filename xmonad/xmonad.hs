@@ -23,6 +23,9 @@ import XMonad.Layout.Spacing
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
 
+defaultMasterVolume :: String
+defaultMasterVolume = "35"
+
 defaultTerminal :: String
 defaultTerminal = "alacritty"
 
@@ -123,7 +126,7 @@ defaultKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- Multimedia "Mute" key
     , ((0                 , xF86XK_AudioMute), spawn "amixer --device pulse set Master toggle")
     -- Meta + "Mute"
-    , ((modm              , xF86XK_AudioMute), spawn "amixer --device pulse set Master 46%")
+    , ((modm              , xF86XK_AudioMute), spawn ("amixer --device pulse set Master " ++ defaultMasterVolume ++ "%"))
     -- Multimedia "Previous" key
     , ((0                 , xF86XK_AudioPrev), spawn "mpc prev")
     -- Multimedia "Next" key
