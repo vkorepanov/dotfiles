@@ -76,14 +76,12 @@ GIT_PROMPT_EXECUTABLE="haskell"
 export ANTIGEN_HS_OUT="$HOME/.zsh/plugins/workdir"
 source $HOME/.zsh/plugins/antigen-hs/init.zsh
 
-# 3 strings prompt:
-# 1) Status code of last executed command.
-# 2) Current directory and git status info.
-# 3) user@host info.
-export PROMPT=$'%{$fg[blue]%}
-┌─────────────────%(0?.%{$fg[green]%}☺.%{$fg_bold[red]%}%?)%{$fg[blue]%}
-├ %{$fg_bold[blue]%}%~ %{$fg[default]%}$(git_super_status)%{$fg[blue]%}
-└─%(!.%{$fg[red]%}.%{$fg[green]%})%n@%M%{$fg[blue]%} %#%{$fg[default]%}%{$reset_color%} '
+local reset_prompt_font='%{$fg[default]%}%{$reset_color%}'
+local last_status_prompt='%(0?.%{$fg[green]%}☺.%{$fg_bold[red]%}%?)%{$fg[blue]%}'$reset_prompt_font
+local login_info_prompt='%{$fg[default]%}%(!.%{fg[red]%}.%{$fg[green]%})%n@%M%{$fg[blue]%} %# '$reset_prompt_font
+local cur_dir_prompt='%{$fg_bold[blue]%}%~'$reset_prompt_font
+export PROMPT=$last_status_prompt' '$login_info_prompt
+export RPROMPT=$cur_dir_prompt' $(git_super_status)'$reset_prompt_font
 
 if [[ "$TERM" = dumb ]]; then
     unset zle_bracketed_paste
