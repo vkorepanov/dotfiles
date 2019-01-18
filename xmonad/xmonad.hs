@@ -114,7 +114,7 @@ defaultKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- Quit xmonad
     , ((modm .|. shiftMask, xK_p     ), io (exitWith ExitSuccess))
     -- Restart xmonad
-    , ((modm              , xK_r     ), spawn "xmonad --recompile; xmonad --restart")
+    , ((modm              , xK_r     ), spawn "stack exec xmonad -- --recompile; stack exec xmonad -- --restart")
     -- Run xmessage with a summary of the default keybindings (useful for beginners)
     , ((modm .|. shiftMask, xK_slash ), spawn ("echo \"" ++ help ++ "\" | xmessage -file -"))
     -- Lock the screen
