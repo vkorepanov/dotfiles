@@ -41,7 +41,7 @@ Plugin 'dyng/ctrlsf.vim'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'Chiel92/vim-autoformat'
 
-Plugin 'Shougo/deoplete.nvim'
+Plugin 'w0rp/ale'
 
 " C/C++ helpers.
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -71,7 +71,9 @@ Plugin 'tpope/vim-abolish'
 " CMake projects.
 Plugin 'vhdirk/vim-cmake'
 if has('nvim')
+    Plugin 'Shougo/deoplete.nvim'
     Plugin 'arakashic/chromatica.nvim'
+    Plugin 'sakhnik/nvim-gdb'
 else
     Plugin 'jeaye/color_coded'
 endif
@@ -89,6 +91,8 @@ Plugin 'keith/swift.vim'
 if has('nvim')
     Plugin 'mitsuse/autocomplete-swift'
 endif
+
+Plugin 'vim-ruby/vim-ruby'
 
 " Other.
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -114,8 +118,14 @@ Plugin 'junegunn/vim-peekaboo'
 Plugin 'vim-scripts/bufkill.vim'
 " Enhanced terminal integration.
 Plugin 'wincent/terminus'
+" Asynchronous build and test dispatcher
+Plugin 'tpope/vim-dispatch'
+if has('nvim')
+    Plugin 'radenling/vim-dispatch-neovim'
+endif
 
 if has('mac')
+    let g:python_host_prog = '/System/Library/Frameworks/Python.framework/Versions/2.7/bin/python'
     Plugin 'gfontenot/vim-xcode'
 endif
 
@@ -123,10 +133,13 @@ endif
 call vundle#end()            " required
 filetype plugin indent on    " required
 
+let g:ale_linters_explicit = 1
+
 " Some YouCompleteMe settings.
 let g:ycm_error_symbol = '!!'
 let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
 let g:ycm_extra_conf_globlist = ['~/*']
+let g:ycm_max_diagnostics_to_display = 300
 
 " Some vim-session settings.
 let g:session_autosave = 'yes'
@@ -139,6 +152,9 @@ let g:miniBufExplorerAutoStart = 0
 " Template settings.
 let g:email=system('git config user.email')
 let g:username=system('git config user.name')
+
+" Fzf settings.
+let g:fzf_history_dir = '~/.local/share/fzf-history'
 
 " Syntastic settings
 set statusline+=%#warningmsg#
@@ -157,6 +173,12 @@ else
     let g:chromatica#libclang_path='/usr/lib/llvm/7/lib'
 endif
 let g:chromatica#enable_at_startup=1
+
+" nvimgdb
+if has('nvim')
+    let g:nvimgdb_config_override = { 'key_until':      '<f6>' }
+endif
+
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Environment settings
@@ -218,6 +240,10 @@ endif " has("autocmd")
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Mappings
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+if has('nvim')
+    tnoremap <Esc> <C-\><C-n>
+    tnoremap <C-v><Esc> <Esc>
+endif
 
 let mapleader = ','
 
@@ -247,7 +273,7 @@ map <F2> :YcmCompleter GoToDefinitionElseDeclaration<CR>
 map <F3> :set hls!<cr>
 
 " Use F4 key as in QtCreator. (Toggle header and cpp files)
-map <F4> :write<CR>:FSHere<CR>
+map <F4> :write!<CR>:FSHere<CR>
 
 " Some plugins shortcuts.
 nmap <leader>bf :MBEOpen<CR>:MBEFocus<CR>
