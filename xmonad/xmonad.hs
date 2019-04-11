@@ -77,8 +77,8 @@ defaultKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm,               xK_e     ), spawn "xdg-open ~/")
     -- Launch dmenu
     , ((modm,               xK_d     ), spawn "dmenu_run")
-    -- Launch gmrun
-    , ((modm .|. shiftMask, xK_d     ), spawn "gmrun")
+    -- Launch rofi
+    , ((modm .|. shiftMask, xK_d     ), spawn "rofi -show run")
     -- Close focused window
     , ((modm .|. shiftMask, xK_c     ), kill)
     -- Rotate through the available layout algorithms
@@ -282,7 +282,7 @@ help = unlines [
   , "-- launching and killing programs"
   , "mod-Enter          Launch terminal"
   , "mod-d              Launch dmenu"
-  , "mod-Shift-d        Launch gmrun"
+  , "mod-Shift-d        Launch rofi"
   , "mod-Shift-c        Close/kill the focused window"
   , "mod-Space          Rotate through the available layout algorithms"
   , "mod-Shift-Space    Reset the layouts on the current workSpace to default"
