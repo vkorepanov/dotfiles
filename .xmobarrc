@@ -24,31 +24,47 @@ Config {
                        , "--normal","#99CC99"
                        , "--high","#F2777A"
                        ] 5
-        , Run MPD
-            [ "-t"
-            , "<statei>vol:<volume>% <fn=2><artist></fn> - <title> <fn=1><fc=#66cccc><bar></fc></fn>"
-            , "-M", "20"
-            , "-b", "."
-            , "-f", "|"
-            , "-W", "20"
-            , "--", "-P", "<fc=#99cc99>►</fc>"
-            , "-S", "<fn=4><fc=#f2777a>■</fc></fn>"
-            , "-Z", "<fn=4><fc=#ffcc66>‖</fc></fn>"
-            ] 5
-        , Run Network "enp7s0" [ "-L", "0"
-                               , "-H", "70"
-                               , "--normal", "#99CC99"
-                               , "--high","#F2777A"
-                               ] 10
-        , Run Memory ["-t", "RAM: <usedratio> (<used> Mb)", "-S", "On" ] 10
-        , Run Swap [ "-t", "Swap: <used> Mb" ] 10
-        , Run Date "<fn=1><fc=#f99157>%a %d %B %Y</fc></fn> <fn=4><fc=#66cccc>%H:%M:%S</fc></fn>"
-                   "date" 10
-        , Run Kbd [ ("us", "<fn=3><fc=#99cc99>US</fc></fn>")
-                  , ("ru", "<fn=3><fc=#ffcc66>RU</fc></fn>")]
-        , Run StdinReader
+          , Run CpuFreq ["-t", "Freq: <cpu0> | <cpu1> | <cpu2> | <cpu3> | <cpu4> | <cpu5> | <cpu6> | <cpu7> | <cpu8> | <cpu9> | <cpu10> | <cpu11> | <cpu12> | <cpu13> | <cpu14> | <cpu15> GHz"
+                        , "-L", "2"
+                        , "-H", "3"
+                        , "-l", "lightblue"
+                        , "-n", "#99CC99"
+                        , "-h", "#F2777A"
+                        ] 10
+          --, Run CoreTemp ["-t", "<cpu0> | <cpu1> | <cpu2> | <cpu3> | <cpu4> | <cpu5> | <cpu6> | <cpu7> | <cpu8> | <cpu9> | <cpu10> | <cpu11> | <cpu12> | <cpu13> | <cpu14> | <cpu15> °C"
+          --              , "-L", "36"
+          --              , "-H", "70"
+          --              , "-l", "lightblue"
+          --              , "-n", "#99CC99"
+          --              , "-h", "#F2777A"
+          --              ] 10
+          --, Run MPD
+          --    [ "-t"
+          --    , "<statei>vol:<volume>% <fn=2><artist></fn> - <title> <fn=1><fc=#66cccc><bar></fc></fn>"
+          --    -- , "<statei>vol:<volume>% <fn=2><file></fn> <fn=1><fc=#66cccc><bar></fc></fn>"
+          --    , "-M", "20"
+          --    , "-b", "."
+          --    , "-f", "|"
+          --    , "-W", "20"
+          --    , "--", "-P", "<fc=#99cc99>►</fc>"
+          --    , "-S", "<fn=4><fc=#f2777a>■</fc></fn>"
+          --    , "-Z", "<fn=4><fc=#ffcc66>‖</fc></fn>"
+          --    ] 5
+          , Run Network "enp7s0" [ "-L", "0"
+                                 , "-H", "70"
+                                 , "--normal", "#99CC99"
+                                 , "--high","#F2777A"
+                                 ] 10
+          , Run Memory ["-t", "RAM: <usedratio> (<used> Mb)", "-S", "On" ] 10
+          , Run Swap [ "-t", "Swap: <used> Mb" ] 10
+          , Run Date "<fn=1><fc=#f99157>%a %d %B %Y</fc></fn> <fn=4><fc=#66cccc>%H:%M:%S</fc></fn>"
+                     "date" 10
+          , Run Kbd [ ("us", "<fn=3><fc=#99cc99>US</fc></fn>")
+                    , ("ru", "<fn=3><fc=#ffcc66>RU</fc></fn>")]
+          , Run StdinReader
     ]
     , sepChar = "%"
     , alignSep = "}{"
-    , template = " %StdinReader%}{%mpd% %multicpu% | %memory% %swap% | %enp7s0%| %date%  %kbd%"
+    --, template = " %StdinReader%}{%mpd% %multicpu% | %memory% %swap% | %enp7s0%| %date%  %kbd%"
+    , template = " %StdinReader%}{%cpufreq% %multicpu% | %memory% %swap% | %enp7s0%| %date%  %kbd%"
 }
