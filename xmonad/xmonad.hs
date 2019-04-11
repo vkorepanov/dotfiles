@@ -122,19 +122,19 @@ defaultKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- Sleep key. Then it pressed just disable a monitor.
     , ((0                 , xF86XK_Sleep), spawn "xset dpms force off")
     -- Multimedia "Play" key
-    , ((0                 , xF86XK_AudioPlay), spawn "mpc toggle")
+    , ((0                 , xF86XK_AudioPlay), spawn "clementine -t")
     -- Multimedia "Mute" key
     , ((0                 , xF86XK_AudioMute), spawn "amixer --device pulse set Master toggle")
     -- Meta + "Mute"
     , ((modm              , xF86XK_AudioMute), spawn ("amixer --device pulse set Master " ++ defaultMasterVolume ++ "%"))
     -- Multimedia "Previous" key
-    , ((0                 , xF86XK_AudioPrev), spawn "mpc prev")
+    , ((0                 , xF86XK_AudioPrev), spawn "clementine --previous")
     -- Multimedia "Next" key
-    , ((0                 , xF86XK_AudioNext), spawn "mpc next")
+    , ((0                 , xF86XK_AudioNext), spawn "clementine --next")
     -- Multimedia "Volume up" key
-    , ((0                 , xF86XK_AudioRaiseVolume), spawn "mpc volume +5")
+    , ((0                 , xF86XK_AudioRaiseVolume), spawn "clementine --volume-increase-by 5")
     -- Multimedia "Volume down" key
-    , ((0                 , xF86XK_AudioLowerVolume), spawn "mpc volume -5")
+    , ((0                 , xF86XK_AudioLowerVolume), spawn "clementine --volume-decrease-by 5")
     -- Multimedia "Volume up" key with mod key will change system volume.
     , ((modm              , xF86XK_AudioRaiseVolume), spawn "amixer --device pulse set Master 2%+")
     -- Multimedia "Volume down" key with mod key will change system volume.
@@ -236,11 +236,12 @@ defaultStartupHook = do
     -- Compositing effects.
     spawnIfNoProcess "compton -bcCf -i 0.8 -D 0 --shadow-blue 0.15 --inactive-dim 0.3"
     spawnChromium
-    spawnIfNoProcess "stalonetray"
+    spawnIfNoProcess "pkill stalonetray; stalonetray"
     spawnIfNoProcess "numlockx"
-    spawnIfNoProcess "xscreensaver"
+    -- spawnIfNoProcess "xscreensaver"
     spawnIfNoProcess "sleep 1 && transset -n stalonetray 0.784314"
-    spawnOnIfNoProcess "2"     "Telegram"
+    spawnIfNoProcess "clementine"
+    spawnOnIfNoProcess "2"     "telegram-desktop"
     spawnOnIfNoProcess gamesWs "steam"
     spawnOnIfNoProcess infoWs  "nvidia-settings"
 
