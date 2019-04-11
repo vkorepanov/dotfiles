@@ -6,5 +6,4 @@ fi
 
 pulseaudio --start
 
-exec dbus-launch stack exec xmonad
-
+exec dbus-launch xmonad
