@@ -174,7 +174,7 @@ let g:syntastic_check_on_wq = 0
 if has('mac')
     let g:chromatica#libclang_path='/usr/local/opt/llvm/lib'
 else
-    let g:chromatica#libclang_path='/usr/lib/llvm/7/lib'
+    let g:chromatica#libclang_path='/usr/lib/llvm/8/lib64'
 endif
 let g:chromatica#enable_at_startup=1
 
