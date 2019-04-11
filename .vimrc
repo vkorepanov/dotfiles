@@ -94,6 +94,10 @@ endif
 
 Plugin 'vim-ruby/vim-ruby'
 
+" Rust
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+Plugin 'rust-lang/rust.vim'
+
 " Other.
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Text filtering and alignment.
@@ -179,6 +183,7 @@ if has('nvim')
     let g:nvimgdb_config_override = { 'key_until':      '<f6>' }
 endif
 
+let g:rustfmt_autosave = 1
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Environment settings
