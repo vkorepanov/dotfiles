@@ -242,7 +242,7 @@ defaultStartupHook = do
     spawnIfNoProcess "sleep 1 && transset -n stalonetray 0.784314"
     spawnIfNoProcess "clementine"
     spawnOnIfNoProcess "2"     "telegram-desktop"
-    spawnOnIfNoProcess gamesWs "steam"
+    spawnOnIfNoProcess gamesWs "env LD_LIBRARY_PATH=/media/data/steam/steamapps/common/ets2/bin/linux_x64 steam"
     spawnOnIfNoProcess infoWs  "nvidia-settings"
 
 defaultXmobarPP = xmobarPP
