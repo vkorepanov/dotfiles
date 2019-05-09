@@ -54,6 +54,7 @@ main() {
     make_link_in_home .xmobarrc
     make_link_in_home .zshrc
     make_link_in_home alacritty/alacritty.yml .config/alacritty/alacritty.yml
+    make_link_in_home gtk-3.0 .config/gtk-3.0
     make_link_in_home tmux/tmux.conf .tmux.conf
     make_link_in_home xmonad/xmonad.hs .xmonad/xmonad.hs
     make_link_in_home zsh/MyAntigen.hs .zsh/plugins
