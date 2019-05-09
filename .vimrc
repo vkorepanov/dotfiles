@@ -144,6 +144,7 @@ let g:ycm_error_symbol = '!!'
 let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
 let g:ycm_extra_conf_globlist = ['~/*']
 let g:ycm_max_diagnostics_to_display = 300
+let g:ycm_rust_src_path = '~/dev/rust/rustc-1.34.0-src/src'
 
 " Some vim-session settings.
 let g:session_autosave = 'yes'
