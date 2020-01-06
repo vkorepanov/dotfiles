@@ -1,9 +1,9 @@
 Config {
-    font = "xft:DejaVu Serif: size=8:regular:antialias=true"
-    , additionalFonts = [ "xft:DejaVu Serif: size=8:bold:antialias=true"
-                        , "xft:DejaVu Serif: size=8:italic:antialias=true"
-                        , "xft:DejaVu Serif: size=8:bold:italic:antialias=true"
-                        , "xft:DejaVu Sans Mono: size=10:regular:antialias=true"
+    font = "xft:Serif: size=8:regular:antialias=true"
+    , additionalFonts = [ "xft:Serif: size=8:bold:antialias=true"
+                        , "xft:Serif: size=8:italic:antialias=true"
+                        , "xft:Serif: size=8:bold:italic:antialias=true"
+                        , "xft:Monospace: size=10:regular:antialias=true"
                         ]
     , alpha = 200
 -- Light gray background and dirty white foreground.
