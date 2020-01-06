@@ -12,6 +12,8 @@ SAVEHIST=100000
 # ctrl+w don't delete all to near space
 WORDCHARS=''@""
 
+fpath=(~/.zsh/completion $fpath)
+
 zstyle ':completion:*' menu select
 zstyle ':completion:*' rehash true
 zstyle ':completion::complete:*' use-cache 1
