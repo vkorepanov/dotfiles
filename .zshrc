@@ -103,7 +103,7 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 export QT_QPA_PLATFORMTHEME="qt5ct"
 
-if [ -z "$TMUX" ] && [ -z "$SSH_TTY" ]; then
+if [ "$EUID" -ne 0 ] && [ -z "$TMUX" ] && [ -z "$SSH_TTY" ]; then
     tmux attach
 fi
 
