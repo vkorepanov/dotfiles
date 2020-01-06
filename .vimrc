@@ -46,7 +46,7 @@ Plugin 'w0rp/ale'
 " C/C++ helpers.
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Very usefull completer.
-Plugin 'Valloric/YouCompleteMe'
+Plugin 'ycm-core/YouCompleteMe'
 " Generates config files for YouCompleteMe.
 Plugin 'rdnetto/YCM-Generator'
 " Light status bar.
@@ -110,6 +110,10 @@ Plugin 'tpope/vim-markdown'
 Plugin 'tpope/vim-surround'
 " Marks with git changes.
 Plugin 'airblade/vim-gitgutter'
+" The undo history visualizer
+Plugin 'mbbill/undotree'
+" Reorder delimited items.
+Plugin 'machakann/vim-swap'
 " Doxygen commentaries generator.
 Plugin 'vim-scripts/DoxygenToolkit.vim'
 " CSV table view.
