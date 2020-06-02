@@ -11,7 +11,7 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 " Let Vundle manage Vundle, required.
-Plugin 'gmarik/Vundle.vim'
+Plugin 'VundleVim/Vundle.vim'
 
 " Solarized colors.
 " Plugin 'altercation/vim-colors-solarized'
@@ -21,20 +21,12 @@ Plugin 'gmarik/Vundle.vim'
 " Allows to have a set of templates for new file creation. (E.g. C header
 " guards, shell script copyrights)
 Plugin 'aperezdc/vim-template'
-" Simple window with all open buffers.
-Plugin 'fholgado/minibufexpl.vim'
 " Fuzzy finder.
 Plugin 'junegunn/fzf'
 " The ripgrep
 Plugin 'jremmen/vim-ripgrep'
-" Git wrapper.
-Plugin 'tpope/vim-fugitive'
 " gitk for Vim.
 Plugin 'junegunn/gv.vim'
-" Vim scripts for vim-session.
-Plugin 'xolox/vim-misc'
-" Session management.
-Plugin 'xolox/vim-session'
 " Finder in a separate window with ag.
 Plugin 'dyng/ctrlsf.vim'
 " Multiple cursors.
@@ -45,21 +37,13 @@ Plugin 'w0rp/ale'
 
 " C/C++ helpers.
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Very usefull completer.
-Plugin 'ycm-core/YouCompleteMe'
-" Generates config files for YouCompleteMe.
-Plugin 'rdnetto/YCM-Generator'
+" Intellisense engine for Vim8 & Neovim, full language server protocol support
+Plugin 'neoclide/coc.nvim'
 " Light status bar.
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 " Easy switch between source and header files.
 Plugin 'derekwyatt/vim-fswitch'
-" Simple add implementation in cpp files based on content of the header file.
-Plugin 'derekwyatt/vim-protodef'
-" Browse the tags of the current file. (E.g. variables, functions, etc.)
-Plugin 'majutsushi/tagbar'
-" Syntax checker.
-Plugin 'vim-syntastic/syntastic'
 " Additional Vim syntax highlighting for C++ (including C++11/14).
 Plugin 'octol/vim-cpp-enhanced-highlight'
 " Debug with gdb in split terminal window.
@@ -71,7 +55,6 @@ Plugin 'tpope/vim-abolish'
 " CMake projects.
 Plugin 'vhdirk/vim-cmake'
 if has('nvim')
-    Plugin 'Shougo/deoplete.nvim'
     Plugin 'arakashic/chromatica.nvim'
     Plugin 'sakhnik/nvim-gdb'
 else
@@ -84,14 +67,6 @@ endif
 Plugin 'dNitro/vim-pug-complete'
 Plugin 'digitaltoad/vim-pug'
 
-" Swift
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-Plugin 'kballard/vim-swift'
-Plugin 'keith/swift.vim'
-if has('nvim')
-    Plugin 'mitsuse/autocomplete-swift'
-endif
-
 Plugin 'vim-ruby/vim-ruby'
 
 " Rust
@@ -102,18 +77,10 @@ Plugin 'rust-lang/rust.vim'
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Text filtering and alignment.
 Plugin 'godlygeek/tabular'
-" Vim motions on speed.
-Plugin 'easymotion/vim-easymotion'
 " Markdown vim mode.
 Plugin 'tpope/vim-markdown'
 " Simple quoting/parenthesizing.
 Plugin 'tpope/vim-surround'
-" Marks with git changes.
-Plugin 'airblade/vim-gitgutter'
-" The undo history visualizer
-Plugin 'mbbill/undotree'
-" Reorder delimited items.
-Plugin 'machakann/vim-swap'
 " Doxygen commentaries generator.
 Plugin 'vim-scripts/DoxygenToolkit.vim'
 " CSV table view.
@@ -142,21 +109,17 @@ call vundle#end()            " required
 filetype plugin indent on    " required
 
 let g:ale_linters_explicit = 1
-
-" Some YouCompleteMe settings.
-let g:ycm_error_symbol = '!!'
-let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
-let g:ycm_extra_conf_globlist = ['~/*']
-let g:ycm_max_diagnostics_to_display = 300
-let g:ycm_rust_src_path = '~/dev/rust/rustc-1.34.0-src/src'
-
-" Some vim-session settings.
-let g:session_autosave = 'yes'
-let g:session_autoload = 'no'
-let g:session_autosave_periodic = 5
-
-" Some MBE settings.
-let g:miniBufExplorerAutoStart = 0
+let g:ale_linter_aliases = {'html': ['html', 'javascript', 'css']}
+let g:ale_linters = {
+            \ 'javascript': ['eslint'],
+            \ 'typescript': ['tslint', 'eslint'],
+            \ 'html': ['tidy'],
+            \ 'pug': ['puglint'],
+            \ 'sass': ['stylelint'],
+            \ 'css': ['stylelint'],
+            \ 'sh': ['shellcheck'],
+            \ 'haskell': ['hfmt', 'hlint', 'ghc', 'stack-ghc'],
+            \}
 
 " Template settings.
 let g:email=system('git config user.email')
@@ -167,19 +130,13 @@ let g:fzf_history_dir = '~/.local/share/fzf-history'
 
 " Syntastic settings
 set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
 
 " Chromatica
 if has('mac')
     let g:chromatica#libclang_path='/usr/local/opt/llvm/lib'
 else
-    let g:chromatica#libclang_path='/usr/lib/llvm/8/lib64'
+    let g:chromatica#libclang_path='/usr/lib/llvm/10/lib64'
 endif
 let g:chromatica#enable_at_startup=1
 
@@ -257,6 +214,27 @@ endif
 
 let mapleader = ','
 
+" use <c-space>for trigger completion
+inoremap <silent><expr> <c-space> coc#refresh()
+
+" Use `[g` and `]g` to navigate diagnostics
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+" GoTo code navigation.
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+command! -nargs=0 Format :call CocActionAsync('format')
+
+" Use K to show documentation in preview window.
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+" Symbol renaming.
+nmap <leader>rn <Plug>(coc-rename)
+
 " Open new tab by Ctrl+T, close by Ctrl+W after leader key.
 nmap <leader><C-t> :tabnew<CR>
 nmap <leader><C-w> :tabclose<CR>
@@ -277,7 +255,7 @@ cmap <C-V> <C-R>+
 cmap <S-Insert> <C-R>+
 
 " Use F2 key as in QtCreator. (Jumps to the declaration of the symbol)
-map <F2> :YcmCompleter GoToDefinitionElseDeclaration<CR>
+nmap <silent> <F2> <Plug>(coc-definition)
 
 " Switch highlight.
 map <F3> :set hls!<cr>
@@ -286,9 +264,8 @@ map <F3> :set hls!<cr>
 map <F4> :write!<CR>:FSHere<CR>
 
 " Some plugins shortcuts.
-nmap <leader>bf :MBEOpen<CR>:MBEFocus<CR>
 nmap <C-F> :CtrlSF <C-r><C-w>
-nmap <leader>af :Autoformat<CR>
+nmap <leader>af :Format<CR>
 
 " Disable some keys.
 imap <silent> <up>       <nop>
@@ -384,6 +361,7 @@ set tabstop=8           " number of spaces a <Tab> in the text stands for
 set undodir=~/.vim/undo
 set undofile
 set undolevels=10000    " maximum number of changes that can be undone
+set updatetime=300
 set visualbell          " disable beeping
 set wildignorecase      " ignore case when completing file names
 set wildmenu            " command-line completion shows a list of matches

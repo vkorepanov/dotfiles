@@ -89,6 +89,7 @@ if [[ "$TERM" = dumb ]]; then
     unset zle_bracketed_paste
 fi
 
+export GPG_TTY="$(tty)"
 export PATH="$PATH:$HOME/.local/bin:/root/.cargo/bin:/$HOME/.cargo/bin"
 
 # startx if we login on tty6

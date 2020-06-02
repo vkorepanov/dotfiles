@@ -43,6 +43,13 @@ main() {
         git clone https://github.com/Tarrasch/antigen-hs "$HOME/.zsh/plugins/antigen-hs" || true
         git clone https://github.com/VundleVim/Vundle.vim "$HOME/.vim/bundle/Vundle.vim" || true
         git clone https://github.com/tmux-plugins/tpm "$HOME/.tmux/plugins/tpm" || true
+
+        nvim +PluginInstall
+        pushd "$HOME"/.vim/bundle/coc.nvim
+        git checkout release
+        popd
+
+        nvim +CocInstall coc-spell-checker coc-jedi coc-git coc-eslit coc-diagnostic coc-cspell-dicts coc-yaml coc-xml coc-tsserver coc-rls coc-python coc-phpls coc-markdownlint coc-json coc-java coc-html coc-css coc-cmake coc-clangd
     fi
 
     make_link_in_home .Xresources
