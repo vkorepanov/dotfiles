@@ -55,11 +55,10 @@ Plugin 'tpope/vim-abolish'
 " CMake projects.
 Plugin 'vhdirk/vim-cmake'
 if has('nvim')
-    Plugin 'arakashic/chromatica.nvim'
     Plugin 'sakhnik/nvim-gdb'
-else
-    Plugin 'jeaye/color_coded'
 endif
+
+Plugin 'jackguo380/vim-lsp-cxx-highlight'
 
 " Web
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
