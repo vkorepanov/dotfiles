@@ -1,29 +1,45 @@
 {
     "cSpell.language": "en,ru",
-    "cSpellExt.enableDictionaries": ["russian"],
+    "cSpellExt.enableDictionaries": [
+        "russian"
+    ],
     "clangd.enabled": false,
+    "clangd.semanticHighlighting": true,
     "coc.preferences.colorSupport": true,
     "coc.preferences.extensionUpdateCheck": "daily",
+    "coc.preferences.hoverTarget": "echo",
     "coc.preferences.useQuickfixForLocations": true,
+    "diagnostic.messageTarget": "float",
     "scss.colorDecorators.enable": true,
     "scss.validate": true,
+    "signature.target": "preview",
     "suggest.defaultSortMethod": "alphabetical",
     "suggest.echodocSupport": true,
     "suggest.enablePreselect": true,
     "suggest.enablePreview": true,
-    "suggest.floatEnable": true,
+    "suggest.floatEnable": false,
     "suggest.noselect": false,
     "suggest.triggerAfterInsertEnter": true,
+    "tsserver.formatOnType": false,
+    "typescript.format.insertSpaceBeforeFunctionParenthesis": true,
     "languageserver": {
         "bash": {
             "command": "bash-language-server",
-            "args": ["start"],
-            "filetypes": ["sh"],
-            "ignoredRootPaths": ["~"]
+            "args": [
+                "start"
+            ],
+            "filetypes": [
+                "sh"
+            ],
+            "ignoredRootPaths": [
+                "~"
+            ]
         },
         "haskell": {
             "command": "hie-wrapper",
-            "args": ["--lsp"],
+            "args": [
+                "--lsp"
+            ],
             "rootPatterns": [
                 "stack.yaml",
                 "cabal.config",
@@ -42,7 +58,9 @@
         },
         "cmake": {
             "command": "cmake-language-server",
-            "filetypes": ["cmake"],
+            "filetypes": [
+                "cmake"
+            ],
             "rootPatterns": [
                 "build/"
             ],
@@ -52,22 +70,46 @@
         },
         "clangd": {
             "command": "clangd",
-            "args": ["--background-index", "--completion-style=detailed"],
-            "rootPatterns": ["compile_commands.json", "compile_flags.txt", ".git/"],
-            "filetypes": ["c", "cpp", "cpp.doxygen", "objc", "objcpp"]
+            "args": [
+                "--background-index",
+                "--completion-style=detailed"
+            ],
+            "rootPatterns": [
+                "compile_commands.json",
+                "compile_flags.txt",
+                ".git/"
+            ],
+            "filetypes": [
+                "c",
+                "cpp",
+                "cpp.doxygen",
+                "objc",
+                "objcpp"
+            ]
         },
         "intelephense": {
             "command": "intelephense",
-            "args": ["--stdio"],
-            "filetypes": ["php"],
+            "args": [
+                "--stdio"
+            ],
+            "filetypes": [
+                "php"
+            ],
             "initializationOptions": {
                 "storagePath": "/tmp/intelephense"
             }
         },
         "sql": {
             "command": "sql-language-server",
-            "args" : ["up", "--method", "stdio"],
-            "filetypes": ["sql", "mysql"]
+            "args": [
+                "up",
+                "--method",
+                "stdio"
+            ],
+            "filetypes": [
+                "sql",
+                "mysql"
+            ]
         }
     },
     "diagnostic-languageserver.filetypes": {
