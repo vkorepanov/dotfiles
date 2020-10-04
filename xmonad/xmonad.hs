@@ -231,6 +231,7 @@ spawnChromium = spawnOnIfNoProcess webWs $ chromiumExecutable
 -- Startup hook
 defaultStartupHook = do
     setWMName "LG3D"
+    spawn "xinput set-prop 12 \"libinput Accel Speed\" -0.6"
     spawnIfNoProcess "feh --bg-fill .background_image"
     spawnIfNoProcess "xsetroot -cursor_name left_ptr"
     -- Compositing effects.
@@ -241,6 +242,7 @@ defaultStartupHook = do
     -- spawnIfNoProcess "xscreensaver"
     spawnIfNoProcess "sleep 1 && transset -n stalonetray 0.784314"
     spawnIfNoProcess "clementine"
+    spawnOnIfNoProcess "2"     "discord"
     spawnOnIfNoProcess "2"     "telegram-desktop"
     spawnOnIfNoProcess gamesWs "env LD_LIBRARY_PATH=/media/data/steam/steamapps/common/ets2/bin/linux_x64 steam"
     spawnOnIfNoProcess infoWs  "nvidia-settings"
