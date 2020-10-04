@@ -50,7 +50,7 @@ Config {
           --    , "-S", "<fn=4><fc=#f2777a>■</fc></fn>"
           --    , "-Z", "<fn=4><fc=#ffcc66>‖</fc></fn>"
           --    ] 5
-          , Run Network "enp7s0" [ "-L", "0"
+          , Run Network "br0" [ "-L", "0"
                                  , "-H", "70"
                                  , "--normal", "#99CC99"
                                  , "--high","#F2777A"
@@ -65,6 +65,6 @@ Config {
     ]
     , sepChar = "%"
     , alignSep = "}{"
-    --, template = " %StdinReader%}{%mpd% %multicpu% | %memory% %swap% | %enp7s0%| %date%  %kbd%"
-    , template = " %StdinReader%}{%cpufreq% %multicpu% | %memory% %swap% | %enp7s0%| %date%  %kbd%"
+    --, template = " %StdinReader%}{%mpd% %multicpu% | %memory% %swap% | %br0%| %date%  %kbd%"
+    , template = " %StdinReader%}{%cpufreq% %multicpu% | %memory% %swap% | %br0%| %date%  %kbd%"
 }
