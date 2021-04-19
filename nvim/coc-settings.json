@@ -1,41 +1,51 @@
 {
   "cSpell.language": "en,ru",
   "cSpellExt.enableDictionaries": ["russian"],
-  "clangd.enabled": false,
+  "clangd.enabled": true,
   "clangd.semanticHighlighting": true,
+  "clangd.path": "clangd",
+  "clangd.arguments": [
+    "-j=16",
+    "--background-index",
+    "--index",
+    "--clang-tidy",
+    "--clang-tidy-checks=clang-diagnostic-*,clang-analyzer-*,-*,bugprone*,modernize*,performance*,-modernize-pass-by-value,-modernize-use-trailing-return-type,-modernize-use-auto,-modernize-use-using",
+    "--pch-storage=memory",
+    "--cross-file-rename",
+    "--completion-parse=auto",
+    "--completion-style=detailed"
+  ],
   "coc.preferences.colorSupport": true,
   "coc.preferences.extensionUpdateCheck": "daily",
-  "coc.preferences.hoverTarget": "echo",
+  "coc.preferences.hoverTarget": "preview",
   "coc.preferences.useQuickfixForLocations": true,
   "diagnostic.messageTarget": "float",
   "prettier.eslintIntegration": true,
   "prettier.singleQuote": true,
   "prettier.semi": false,
+  "rust-client.disableRustup": true,
   "scss.colorDecorators.enable": true,
   "scss.validate": true,
   "signature.target": "preview",
+  "signature.triggerSignatureWait": 200,
+  "suggest.triggerCompletionWait": 30,
   "suggest.defaultSortMethod": "alphabetical",
-  "suggest.echodocSupport": true,
   "suggest.enablePreselect": true,
   "suggest.enablePreview": true,
-  "suggest.floatEnable": false,
+  "suggest.floatEnable": true,
+  "suggest.maxCompleteItemCount": 1000,
   "suggest.noselect": false,
+  "suggest.numberSelect": true,
   "suggest.triggerAfterInsertEnter": true,
-  "tsserver.formatOnType": false,
+  "tsserver.formatOnType": true,
   "typescript.format.insertSpaceBeforeFunctionParenthesis": true,
   "typescript.format.semicolons": "remove",
   "languageserver": {
-    "bash": {
-      "command": "bash-language-server",
-      "args": ["start"],
-      "filetypes": ["sh"],
-      "ignoredRootPaths": ["~"]
-    },
     "haskell": {
-      "command": "hie-wrapper",
+      "command": "haskell-language-server-wrapper",
       "args": ["--lsp"],
       "rootPatterns": ["stack.yaml", "cabal.config", "package.yaml"],
-      "filetypes": ["hs", "lhs", "haskell"],
+      "filetypes": ["hs", "lhs", "haskell", "lhaskell"],
       "initializationOptions": {
         "languageServerHaskell": {
           "hlintOn": true
@@ -49,12 +59,6 @@
       "initializationOptions": {
         "buildDirectory": "build"
       }
-    },
-    "clangd": {
-      "command": "clangd",
-      "args": ["--background-index", "--completion-style=detailed"],
-      "rootPatterns": ["compile_commands.json", "compile_flags.txt", ".git/"],
-      "filetypes": ["c", "cpp", "cpp.doxygen", "objc", "objcpp"]
     },
     "intelephense": {
       "command": "intelephense",
@@ -107,5 +111,6 @@
     "vim",
     "yaml",
     "yml"
-  ]
+  ],
+  "git.enableGutters": false
 }
