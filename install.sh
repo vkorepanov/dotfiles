@@ -23,7 +23,7 @@ make_link_in_home() {
 }
 
 main() {
-    cd "$(dirname -- $0)"
+    cd "$(dirname -- "$0")"
 
     local links_only=""
     while getopts "s" opt; do
@@ -49,7 +49,7 @@ main() {
         git checkout release
         popd
 
-        nvim +CocInstall coc-spell-checker coc-jedi coc-git coc-eslit coc-diagnostic coc-cspell-dicts coc-yaml coc-xml coc-tsserver coc-rls coc-python coc-phpls coc-markdownlint coc-json coc-java coc-html coc-css coc-cmake coc-clangd
+        nvim +CocInstall coc-pyright coc-rust-analyzer coc-eslint coc-sh coc-explorer coc-fzf-preview coc-prettier coc-highlight coc-pairs coc-vetur coc-spell-checker coc-jedi coc-git coc-eslit coc-diagnostic coc-cspell-dicts coc-yaml coc-xml coc-tsserver coc-rls coc-python coc-phpls coc-markdownlint coc-json coc-java coc-html coc-css coc-cmake coc-clangd
     fi
 
     make_link_in_home .Xresources
