@@ -33,7 +33,7 @@ Plugin 'dyng/ctrlsf.vim'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'Chiel92/vim-autoformat'
 
-Plugin 'w0rp/ale'
+" Plugin 'w0rp/ale'
 
 " C/C++ helpers.
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -80,6 +80,8 @@ Plugin 'godlygeek/tabular'
 Plugin 'tpope/vim-markdown'
 " Simple quoting/parenthesizing.
 Plugin 'tpope/vim-surround'
+" Git
+Plugin 'tpope/vim-fugitive'
 " Doxygen commentaries generator.
 Plugin 'vim-scripts/DoxygenToolkit.vim'
 " CSV table view.
@@ -94,6 +96,7 @@ Plugin 'vim-scripts/bufkill.vim'
 Plugin 'wincent/terminus'
 " Asynchronous build and test dispatcher
 Plugin 'tpope/vim-dispatch'
+Plugin 'ryanoasis/vim-devicons'
 if has('nvim')
     Plugin 'radenling/vim-dispatch-neovim'
 endif
@@ -146,6 +149,13 @@ endif
 
 let g:rustfmt_autosave = 1
 
+" jackguo380/vim-lsp-cxx-highlight
+if (has("nvim"))
+    let g:lsp_cxx_hl_use_nvim_text_props = 1
+else
+    let g:lsp_cxx_hl_use_text_props = 1
+endif
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Environment settings
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -178,6 +188,8 @@ if has("autocmd")
   augroup vimrcEx
   au!
 
+  autocmd FileType vue command! -nargs=0 Format :normal :CocCommand prettier.formatFile<CR>
+
   " Show Vim how to read doc-files.
   autocmd BufReadPre *.doc,*.DOC set ro
   autocmd BufReadPost *.doc,*.DOC silent %!antiword -m cp1251.txt "%"
@@ -188,7 +200,7 @@ if has("autocmd")
   " For all text files set 'textwidth' to 78 characters.
   autocmd FileType text setlocal textwidth=78
 
-  autocmd BufRead,BufNewFile *.h,*.cpp,*.hpp set number filetype=cpp.doxygen
+  " autocmd BufRead,BufNewFile *.h,*.cpp,*.hpp set number filetype=cpp.doxygen
 
   " When editing a file, always jump to the last known cursor position.
   " Don't do it when the position is invalid or when inside an event handler
@@ -199,6 +211,13 @@ if has("autocmd")
     \ if line("'\"") > 1 && line("'\"") <= line("$") |
     \   exe "normal! g`\"" |
     \ endif
+
+  autocmd CursorHold * silent call CocActionAsync('highlight')
+
+  " Setup formatexpr specified filetype(s).
+  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+  " Update signature help on jump placeholder.
+  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
 
   augroup END
 endif " has("autocmd")
@@ -226,14 +245,27 @@ nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 
-" command! -nargs=0 Format :call CocActionAsync('format')
-command! -nargs=0 Format :normal :CocCommand prettier.formatFile<CR>
+command! -nargs=0 Format :call CocActionAsync('format')
+" command! -nargs=0 Format :normal :CocCommand prettier.formatFile<CR>
 
 " Use K to show documentation in preview window.
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  elseif (coc#rpc#ready())
+    call CocActionAsync('doHover')
+  else
+    execute '!' . &keywordprg . " " . expand('<cword>')
+  endif
+endfunction
+
 " Symbol renaming.
 nmap <leader>rn <Plug>(coc-rename)
+
+xmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
 
 " Open new tab by Ctrl+T, close by Ctrl+W after leader key.
 nmap <leader><C-t> :tabnew<CR>
@@ -261,7 +293,8 @@ nmap <silent> <F2> <Plug>(coc-definition)
 map <F3> :set hls!<cr>
 
 " Use F4 key as in QtCreator. (Toggle header and cpp files)
-map <F4> :write!<CR>:FSHere<CR>
+" map <F4> :write!<CR>:FSHere<CR>
+nmap <silent> <F4> :CocCommand clangd.switchSourceHeader<CR>
 
 " Some plugins shortcuts.
 nmap <C-F> :CtrlSF <C-r><C-w>
