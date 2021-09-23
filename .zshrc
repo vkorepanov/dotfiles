@@ -90,7 +90,7 @@ if [[ "$TERM" = dumb ]]; then
 fi
 
 export GPG_TTY="$(tty)"
-export PATH="$PATH:$HOME/.local/bin:/root/.cargo/bin:/$HOME/.cargo/bin"
+export PATH="$PATH:$HOME/.local/bin:/root/.cargo/bin:$HOME/.cargo/bin:$HOME/.vim/bundle/fzf/bin"
 
 # startx if we login on tty6
 [[ "$(tty)" = "/dev/tty1" ]] && exec startx
