@@ -23,7 +23,7 @@ make_link_in_home() {
 }
 
 main() {
-    cd "$(dirname -- "$0")"
+    pushd "$(dirname -- "$0")"
 
     local links_only=""
     while getopts "s" opt; do
@@ -33,24 +33,13 @@ main() {
         esac
     done
 
+    make_path "$HOME/.config/alacritty/"
     make_path "$HOME/.tmux/plugins"
     make_path "$HOME/.vim/bundle"
+    make_path "$HOME/.vim/colors"
     make_path "$HOME/.vim/swap"
     make_path "$HOME/.xmonad"
     make_path "$HOME/.zsh/plugins"
-
-    if [ -z "$links_only" ]; then
-        git clone https://github.com/Tarrasch/antigen-hs "$HOME/.zsh/plugins/antigen-hs" || true
-        git clone https://github.com/VundleVim/Vundle.vim "$HOME/.vim/bundle/Vundle.vim" || true
-        git clone https://github.com/tmux-plugins/tpm "$HOME/.tmux/plugins/tpm" || true
-
-        nvim +PluginInstall
-        pushd "$HOME"/.vim/bundle/coc.nvim
-        git checkout release
-        popd
-
-        nvim +CocInstall coc-pyright coc-rust-analyzer coc-eslint coc-sh coc-explorer coc-fzf-preview coc-prettier coc-highlight coc-pairs coc-vetur coc-spell-checker coc-jedi coc-git coc-eslit coc-diagnostic coc-cspell-dicts coc-yaml coc-xml coc-tsserver coc-rls coc-python coc-phpls coc-markdownlint coc-json coc-java coc-html coc-css coc-cmake coc-clangd
-    fi
 
     make_link_in_home .Xresources
     make_link_in_home .mplayer
@@ -60,12 +49,30 @@ main() {
     make_link_in_home .xinitrc
     make_link_in_home .xmobarrc
     make_link_in_home .zshrc
+
     make_link_in_home alacritty/alacritty.yml .config/alacritty/alacritty.yml
     make_link_in_home gtk-3.0 .config/gtk-3.0
+    make_link_in_home nvim .config/nvim
     make_link_in_home tmux/tmux.conf .tmux.conf
     make_link_in_home tmux/tomorrow-night.tmux .tmux/tomorrow-night.tmux
     make_link_in_home xmonad/xmonad.hs .xmonad/xmonad.hs
     make_link_in_home zsh/MyAntigen.hs .zsh/plugins
+
+    if [ -z "$links_only" ]; then
+        git clone https://github.com/Tarrasch/antigen-hs "$HOME/.zsh/plugins/antigen-hs" || true
+        git clone https://github.com/VundleVim/Vundle.vim "$HOME/.vim/bundle/Vundle.vim" || true
+        git clone https://github.com/tmux-plugins/tpm "$HOME/.tmux/plugins/tpm" || true
+        git clone https://github.com/neoclide/coc.nvim "$HOME/.vim/bundle/coc.nvim" || true
+        wget -O "$HOME/.vim/colors/Tomorrow-Night.vim" "https://raw.githubusercontent.com/chriskempson/tomorrow-theme/master/vim/colors/Tomorrow-Night.vim"
+
+        pushd "$HOME"/.vim/bundle/coc.nvim
+        git checkout release
+        popd
+
+        nvim +PluginInstall
+    fi
+
+    popd
 }
 
 main "$@"
