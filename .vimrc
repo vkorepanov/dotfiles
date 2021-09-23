@@ -46,10 +46,6 @@ Plugin 'vim-airline/vim-airline-themes'
 Plugin 'derekwyatt/vim-fswitch'
 " Additional Vim syntax highlighting for C++ (including C++11/14).
 Plugin 'octol/vim-cpp-enhanced-highlight'
-" Debug with gdb in split terminal window.
-if !has('mac')
-    Plugin 'vim-scripts/Conque-GDB'
-endif
 " Subvert command + case-correction by crs/crm/crc/cru.
 Plugin 'tpope/vim-abolish'
 " CMake projects.
