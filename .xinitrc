@@ -4,6 +4,4 @@ if [ -f ~/.Xresources ]; then
     xrdb ~/.Xresources
 fi
 
-pulseaudio --start
-
-exec dbus-launch xmonad
+exec dbus-launch stack run --stack-yaml /home/real/.config/xmonad/stack.yaml xmonad
