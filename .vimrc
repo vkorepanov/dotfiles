@@ -367,6 +367,8 @@ set matchpairs=(:),{:},[:],<:>,"/*":"*/"    " pairs that match for `%`
 if !has('nvim')
     set maxmem=4096         " max amount of memory in Kb used for one buffer
     set maxmemtot=65536     " max amount of memory in Kb used for all buffers
+else
+    set termguicolors       " 24-bit colors in the TUI
 endif
 set number              " numbers at the left side
 set relativenumber      " relative numbers
