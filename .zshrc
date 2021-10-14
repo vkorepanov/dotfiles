@@ -73,6 +73,7 @@ setopt noallexport noglobalexport
 ##############################################################################
 # Plugins, prompt, tmux.
 ##############################################################################
+export PATH="$HOME/.local/bin:/root/.cargo/bin:$HOME/.cargo/bin:$HOME/.vim/bundle/fzf/bin:$HOME/.cabal/bin:$HOME/.ghcup/bin:$PATH"
 
 GIT_PROMPT_EXECUTABLE="haskell"
 export ANTIGEN_HS_OUT="$HOME/.zsh/plugins/workdir"
@@ -90,7 +91,6 @@ if [[ "$TERM" = dumb ]]; then
 fi
 
 export GPG_TTY="$(tty)"
-export PATH="$PATH:$HOME/.local/bin:/root/.cargo/bin:$HOME/.cargo/bin:$HOME/.vim/bundle/fzf/bin"
 
 # startx if we login on tty6
 [[ "$(tty)" = "/dev/tty1" ]] && exec startx
@@ -103,6 +103,8 @@ export FZF_DEFAULT_COMMAND='fd --type f'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 export QT_QPA_PLATFORMTHEME="qt5ct"
+
+export XDG_DATA_DIRS="/home/real/.local/share/flatpak/exports/share:$XDG_DATA_DIRS"
 
 if [ "$EUID" -ne 0 ] && [ -z "$TMUX" ] && [ -z "$SSH_TTY" ]; then
     tmux attach
