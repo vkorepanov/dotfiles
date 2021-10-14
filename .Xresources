@@ -1,4 +1,5 @@
-Xcursor.theme: Vanilla-DMZ-AA
+! Xcursor.theme: DMZ-Black
+Xcursor.theme: Adwaita
 Xcursor.size: 32
 
 Xft.dpi: 162
