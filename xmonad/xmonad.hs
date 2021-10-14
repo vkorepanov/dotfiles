@@ -24,7 +24,11 @@ import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
 
 defaultMasterVolume :: String
-defaultMasterVolume = "35"
+defaultMasterVolume = "3"
+
+audioDevice :: String
+audioDevice = "pipewire"
+-- audioDevice = "pulse"
 
 defaultTerminal :: String
 defaultTerminal = "alacritty"
@@ -124,9 +128,9 @@ defaultKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- Multimedia "Play" key
     , ((0                 , xF86XK_AudioPlay), spawn "clementine -t")
     -- Multimedia "Mute" key
-    , ((0                 , xF86XK_AudioMute), spawn "amixer --device pulse set Master toggle")
+    , ((0                 , xF86XK_AudioMute), spawn ("amixer --device " ++ audioDevice ++ " set Master toggle"))
     -- Meta + "Mute"
-    , ((modm              , xF86XK_AudioMute), spawn ("amixer --device pulse set Master " ++ defaultMasterVolume ++ "%"))
+    , ((modm              , xF86XK_AudioMute), spawn ("amixer --device " ++ audioDevice ++ " set Master " ++ defaultMasterVolume ++ "%"))
     -- Multimedia "Previous" key
     , ((0                 , xF86XK_AudioPrev), spawn "clementine --previous")
     -- Multimedia "Next" key
@@ -136,9 +140,9 @@ defaultKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- Multimedia "Volume down" key
     , ((0                 , xF86XK_AudioLowerVolume), spawn "clementine --volume-decrease-by 5")
     -- Multimedia "Volume up" key with mod key will change system volume.
-    , ((modm              , xF86XK_AudioRaiseVolume), spawn "amixer --device pulse set Master 2%+")
+    , ((modm              , xF86XK_AudioRaiseVolume), spawn ("amixer --device " ++ audioDevice ++ " set Master 2%+"))
     -- Multimedia "Volume down" key with mod key will change system volume.
-    , ((modm              , xF86XK_AudioLowerVolume), spawn "amixer --device pulse set Master 2%-")
+    , ((modm              , xF86XK_AudioLowerVolume), spawn ("amixer --device " ++ audioDevice ++ " set Master 2%-"))
     ]
     ++
     -- mod-[1..9], Switch to workspace N
@@ -185,18 +189,19 @@ defaultLayout = smartBorders tiled ||| noBorders Full
 
 -- Window rules
 defaultManageHook = manageSpawn <+> composeAll
-    [ className =? "Chromium"       --> doShift webWs
-    , className =? "Gimp"           --> doFloat
-    , className =? "MPlayer"        --> doFloat
-    , className =? "Nvidia-settings"--> doShift infoWs
-    , className =? "SKGuiModeling"  --> doFloat
-    , className =? "Steam"          --> doShift gamesWs
-    , className =? "ksysguard"      --> doShift infoWs
-    , resource  =? "desktop_window" --> doIgnore
-    , resource  =? "kdesktop"       --> doIgnore
-    , className =? "stalonetray"    --> doIgnore
-    , isFullscreen                  --> doFullFloat
-    , isDialog                      --> doCenterFloat
+    [ className =? "Chromium"           --> doShift webWs
+    , className =? "Gimp"               --> doFloat
+    , className =? "MPlayer"            --> doFloat
+    , className =? "Nvidia-settings"    --> doShift infoWs
+    , className =? "SKGuiModeling"      --> doFloat
+    , className =? "Steam"              --> doShift gamesWs
+    , className =? "ksysguard"          --> doShift infoWs
+    , className =? "telegram-desktop"   --> doShift "2"
+    , resource  =? "desktop_window"     --> doIgnore
+    , resource  =? "kdesktop"           --> doIgnore
+    , className =? "stalonetray"        --> doIgnore
+    , isFullscreen                      --> doFullFloat
+    , isDialog                          --> doCenterFloat
     ]
 
 -- Event handling
@@ -226,16 +231,18 @@ chromiumExecutable = "chromium-browser"
 
 spawnChromium :: X ()
 spawnChromium = spawnOnIfNoProcess webWs $ chromiumExecutable
-    ++ " --enable-native-gpu-memory-buffers --enable-features=\"CheckerImaging\""
+    ++ " --enable-native-gpu-memory-buffers --enable-features=CheckerImaging " -- --enable-features=VaapiVideoDecoder"
 
 -- Startup hook
 defaultStartupHook = do
     setWMName "LG3D"
     spawn "xinput set-prop 12 \"libinput Accel Speed\" -0.6"
-    spawnIfNoProcess "feh --bg-fill .background_image"
+    spawnIfNoProcess "display -window root ~/.background_image"
     spawnIfNoProcess "xsetroot -cursor_name left_ptr"
+    -- Workaround: flatpak can't find display :99 without this
+    spawnIfNoProcess "xhost +"
     -- Compositing effects.
-    spawnIfNoProcess "compton -bcCf -i 0.8 -D 0 --shadow-blue 0.15 --inactive-dim 0.3"
+    -- spawnIfNoProcess "compton -bcCf -i 0.8 -D 0 --shadow-blue 0.15 --inactive-dim 0.3"
     spawnChromium
     spawnIfNoProcess "pkill stalonetray; stalonetray"
     spawnIfNoProcess "numlockx"
@@ -243,7 +250,7 @@ defaultStartupHook = do
     spawnIfNoProcess "sleep 1 && transset -n stalonetray 0.784314"
     spawnIfNoProcess "clementine"
     spawnOnIfNoProcess "2"     "discord"
-    spawnOnIfNoProcess "2"     "telegram-desktop"
+    spawnOnIfNoProcess "2"     "flatpak run org.telegram.desktop"
     spawnOnIfNoProcess gamesWs "env LD_LIBRARY_PATH=/media/data/steam/steamapps/common/ets2/bin/linux_x64 steam"
     spawnOnIfNoProcess infoWs  "nvidia-settings"
 
@@ -251,7 +258,7 @@ defaultXmobarPP = xmobarPP
     { ppCurrent = xmobarColor xmobarCurrentWorkspaceColor "" . wrap "<fn=3>[" "]</fn>"
     , ppUrgent  = xmobarColor urgencyColor ""
     , ppSep     = " | "
-    , ppTitle   = xmobarColor xmobarTitleColor "" . shorten 60 .wrap "" ""
+    , ppTitle   = xmobarColor xmobarTitleColor "" . shorten 90 .wrap "" ""
     }
 
 main = do
