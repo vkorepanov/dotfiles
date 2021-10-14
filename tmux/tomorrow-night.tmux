@@ -13,6 +13,8 @@
 #   #b294bb Purple
 
 set -g status-bg default
+set -g status-style bg=default
+set -g status-right-length 80
 setw -g window-status-current-style bg="#282a2e",fg="#81a2be"
 
 set-window-option -g window-status-style bg=default,fg=white
