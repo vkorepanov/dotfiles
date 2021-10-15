@@ -38,7 +38,6 @@ main() {
     make_path "$HOME/.vim/bundle"
     make_path "$HOME/.vim/colors"
     make_path "$HOME/.vim/swap"
-    make_path "$HOME/.config/xmonad"
     make_path "$HOME/.zsh/plugins"
 
     make_link_in_home .Xresources
@@ -56,6 +55,7 @@ main() {
     make_link_in_home sway .config/sway
     make_link_in_home tmux/tmux.conf .tmux.conf
     make_link_in_home tmux/tomorrow-night.tmux .tmux/tomorrow-night.tmux
+    make_link_in_home waybar .config/waybar
     make_link_in_home xmonad .config/xmonad
     make_link_in_home zsh/MyAntigen.hs .zsh/plugins
 

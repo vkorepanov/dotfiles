@@ -1,0 +1,73 @@
+/*
+ * style.css
+ */
+
+* {
+    border: none;
+    border-radius: 0;
+    font-family: Hack, monospace;
+    font-size: 12px;
+    min-height: 0;
+}
+
+window#waybar {
+    background-color: rgba(51, 51, 51, 0.5);
+    color: #cccccc;
+    transition-property: background-color;
+    transition-duration: .5s;
+}
+
+#workspaces button {
+    padding: 0 2px;
+}
+
+#workspaces button.focused {
+    color: #6699cc;
+}
+
+#workspaces button.urgent {
+    color: #f99157;
+}
+
+#window {
+    color: #66cccc;
+}
+
+#clock,
+#cpu,
+#memory,
+#network,
+#tray {
+    padding: 0 2px;
+    margin: 0 2px;
+    color: #cccccc;
+}
+
+#network {
+    min-width: 180px;
+}
+
+#cpu {
+    color: lightblue;
+}
+
+#cpu.medium {
+    color: #99cc99;
+}
+
+#cpu.high {
+    color: #f2777a;
+}
+
+#clock.date {
+    color: #f99157;
+}
+
+#clock.time {
+    color: #66cccc;
+}
+
+#window,
+#workspaces {
+    margin: 0 2px;
+}
