@@ -53,6 +53,7 @@ main() {
     make_link_in_home alacritty/alacritty.yml .config/alacritty/alacritty.yml
     make_link_in_home gtk-3.0 .config/gtk-3.0
     make_link_in_home nvim .config/nvim
+    make_link_in_home sway .config/sway
     make_link_in_home tmux/tmux.conf .tmux.conf
     make_link_in_home tmux/tomorrow-night.tmux .tmux/tomorrow-night.tmux
     make_link_in_home xmonad .config/xmonad
