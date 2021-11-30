@@ -205,7 +205,7 @@ defaultManageHook = manageSpawn <+> composeAll
     ]
 
 -- Event handling
-defaultEventHook = fullscreenEventHook <+> ewmhDesktopsEventHook
+defaultEventHook = mempty
 
 -- Status bars and logging
 defaultLogHook = return ()
@@ -265,7 +265,7 @@ main = do
     cfg <- statusBar "xmobar" defaultXmobarPP
            (\c -> (modMask c, xK_f)) . withUrgencyHook (BorderUrgencyHook urgencyColor)
            $ defaults
-    xmonad cfg
+    xmonad . ewmhFullscreen . ewmh $ cfg
 
 defaults = def {
     terminal           = defaultTerminal
