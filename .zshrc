@@ -75,6 +75,9 @@ setopt noallexport noglobalexport
 ##############################################################################
 export PATH="$HOME/.local/bin:/root/.cargo/bin:$HOME/.cargo/bin:$HOME/.vim/bundle/fzf/bin:$HOME/.cabal/bin:$HOME/.ghcup/bin:$PATH"
 
+export LIBVA_DRIVER_NAME=vdpau
+export LIBVA_DRIVERS_PATH=/usr/lib/dri/
+
 GIT_PROMPT_EXECUTABLE="haskell"
 export ANTIGEN_HS_OUT="$HOME/.zsh/plugins/workdir"
 source $HOME/.zsh/plugins/antigen-hs/init.zsh
@@ -92,9 +95,6 @@ fi
 
 export GPG_TTY="$(tty)"
 
-# startx if we login on tty6
-[[ "$(tty)" = "/dev/tty1" ]] && exec startx
-
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 export FZF_TMUX=1
@@ -105,6 +105,14 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export QT_QPA_PLATFORMTHEME="qt5ct"
 
 export XDG_DATA_DIRS="/home/real/.local/share/flatpak/exports/share:$XDG_DATA_DIRS"
+
+# export GDK_DPI_SCALE=1.65
+export MOZ_ENABLE_WAYLAND=1
+export CHROMIUM_FLAGS="--enable-features=Vulkan --enable-features=VaapiVideoDecoder --enable-features=UseOzonePlatform --enable-gpu-rasterization --enable-zero-copy --ozone-platform=x11"
+
+# startx if we login on tty6
+[[ "$(tty)" = "/dev/tty1" ]] && exec startx
+[[ "$(tty)" = "/dev/tty2" ]] && dbus-run-session sway --unsupported-gpu
 
 if [ "$EUID" -ne 0 ] && [ -z "$TMUX" ] && [ -z "$SSH_TTY" ]; then
     tmux attach
