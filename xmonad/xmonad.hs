@@ -236,9 +236,12 @@ spawnChromium = spawnOnIfNoProcess webWs $ chromiumExecutable
 -- Startup hook
 defaultStartupHook = do
     setWMName "LG3D"
-    spawn "xinput set-prop 12 \"libinput Accel Speed\" -0.6"
+    -- spawn "xinput set-prop 12 \"libinput Accel Speed\" -0.6"
     spawnIfNoProcess "display -window root ~/.background_image"
     spawnIfNoProcess "xsetroot -cursor_name left_ptr"
+    spawnIfNoProcess "systemctl start --user wireplumber"
+    spawnIfNoProcess "systemctl start --user pipewire-pulse.service"
+    spawnIfNoProcess "mako"
     -- Workaround: flatpak can't find display :99 without this
     spawnIfNoProcess "xhost +"
     -- Compositing effects.
