@@ -107,12 +107,32 @@ export QT_QPA_PLATFORMTHEME="qt5ct"
 export XDG_DATA_DIRS="/home/real/.local/share/flatpak/exports/share:$XDG_DATA_DIRS"
 
 # export GDK_DPI_SCALE=1.65
-export MOZ_ENABLE_WAYLAND=1
-export CHROMIUM_FLAGS="--enable-features=Vulkan --enable-features=VaapiVideoDecoder --enable-features=UseOzonePlatform --enable-gpu-rasterization --enable-zero-copy --ozone-platform=x11"
+function __setup_wayland_vars() {
+    export MOZ_ENABLE_WAYLAND=1
+    export QT_AUTO_SCREEN_SCALE_FACTOR=1
+    export QT_QPA_PLATFORM=wayland
+    export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
+    export GDK_BACKEND=wayland
+    export __GLX_VENDOR_LIBRARY_NAME=nvidia
+    export WLR_NO_HARDWARE_CURSORS=1
+    export GBM_BACKEND=nvidia-drm
+    # export WLR_RENDERER=vulkan
+    export CHROMIUM_FLAGS="--enable-features=Vulkan --enable-features=VaapiVideoDecoder --enable-features=UseOzonePlatform --enable-gpu-rasterization --enable-zero-copy --ozone-platform=x11"
+}
+
+function run_sway() {
+    __setup_wayland_vars
+    dbus-run-session sway --unsupported-gpu
+}
 
 # startx if we login on tty6
 [[ "$(tty)" = "/dev/tty1" ]] && exec startx
-[[ "$(tty)" = "/dev/tty2" ]] && dbus-run-session sway --unsupported-gpu
+[[ "$(tty)" = "/dev/tty2" ]] && run_sway
+# export __EGL_VENDOR_LIBRARY_FILENAMES=/usr/share/glvnd/egl_vendor.d/50_mesa.json
+
+if [[ "$XDG_SESSION_TYPE" = "wayland" ]]; then
+    __setup_wayland_vars
+fi
 
 if [ "$EUID" -ne 0 ] && [ -z "$TMUX" ] && [ -z "$SSH_TTY" ]; then
     tmux attach
