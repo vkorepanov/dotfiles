@@ -122,8 +122,8 @@ let g:ale_linters = {
             \}
 
 " Template settings.
-let g:email=system('git config user.email')
-let g:username=system('git config user.name')
+let g:email=systemlist('git config user.email')[0]
+let g:username=systemlist('git config user.name')[0]
 
 " Fzf settings.
 let g:fzf_history_dir = '~/.local/share/fzf-history'
@@ -179,22 +179,10 @@ set cinoptions=N-sg0
 " Autocommands
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" Add `:Format` command to format current buffer.
-command! -nargs=0 Format :call CocActionAsync('format')
-
-" Add `:Fold` command to fold current buffer.
-command! -nargs=? Fold :call     CocAction('fold', <f-args>)
-
-" Add `:OR` command for organize imports of the current buffer.
-command! -nargs=0 OR   :call     CocActionAsync('runCommand', 'editor.action.organizeImport')
-
-
 if has("autocmd")
   " Put these in an autocmd group, so that we can delete them easily.
   augroup vimrcEx
   au!
-
-  autocmd FileType vue command! -nargs=0 Format :normal :CocCommand prettier.formatFile<CR>
 
   " Show Vim how to read doc-files.
   autocmd BufReadPre *.doc,*.DOC set ro
@@ -218,13 +206,6 @@ if has("autocmd")
     \   exe "normal! g`\"" |
     \ endif
 
-  autocmd CursorHold * silent call CocActionAsync('highlight')
-
-  " Setup formatexpr specified filetype(s).
-  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
-  " Update signature help on jump placeholder.
-  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
-
   augroup END
 endif " has("autocmd")
 
@@ -244,28 +225,30 @@ let mapleader = ','
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
 " other plugin before putting this into your config.
 inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#pum#visible() ? coc#pum#next(1):
+      \ CheckBackspace() ? "\<Tab>" :
       \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
 
-function! s:check_back_space() abort
+" Make <CR> to accept selected completion item or notify coc.nvim to format
+" <C-g>u breaks current undo, please make your own choice.
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+function! CheckBackspace() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
-" Alt+Enter for actions
-nmap <A-cr> :CocAction<CR>
-
-" use <c-space>for trigger completion
-inoremap <silent><expr> <c-space> coc#refresh()
-
-" Make <CR> auto-select the first completion item and notify coc.nvim to
-" format on enter, <cr> could be remapped by other vim plugin
-inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
-                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+" Use <c-space> to trigger completion.
+if has('nvim')
+  inoremap <silent><expr> <c-space> coc#refresh()
+else
+  inoremap <silent><expr> <c-@> coc#refresh()
+endif
 
 " Use `[g` and `]g` to navigate diagnostics
+" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
 nmap <silent> [g <Plug>(coc-diagnostic-prev)
 nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
@@ -275,27 +258,34 @@ nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 
-command! -nargs=0 Format :call CocActionAsync('format')
-" command! -nargs=0 Format :normal :CocCommand prettier.formatFile<CR>
-
 " Use K to show documentation in preview window.
-nnoremap <silent> K :call <SID>show_documentation()<CR>
+nnoremap <silent> K :call ShowDocumentation()<CR>
 
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  elseif (coc#rpc#ready())
+function! ShowDocumentation()
+  if CocAction('hasProvider', 'hover')
     call CocActionAsync('doHover')
   else
-    execute '!' . &keywordprg . " " . expand('<cword>')
+    call feedkeys('K', 'in')
   endif
 endfunction
+
+" Highlight the symbol and its references when holding the cursor.
+autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " Symbol renaming.
 nmap <leader>rn <Plug>(coc-rename)
 
+" Formatting selected code.
 xmap <leader>f  <Plug>(coc-format-selected)
 nmap <leader>f  <Plug>(coc-format-selected)
+
+augroup mygroup
+  autocmd!
+  " Setup formatexpr specified filetype(s).
+  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+  " Update signature help on jump placeholder.
+  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+augroup end
 
 " Applying codeAction to the selected region.
 " Example: `<leader>aap` for current paragraph
@@ -336,6 +326,20 @@ endif
 nmap <silent> <C-s> <Plug>(coc-range-select)
 xmap <silent> <C-s> <Plug>(coc-range-select)
 
+" Add `:Format` command to format current buffer.
+command! -nargs=0 Format :call CocActionAsync('format')
+
+" Add `:Fold` command to fold current buffer.
+command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+
+" Add `:OR` command for organize imports of the current buffer.
+command! -nargs=0 OR   :call     CocActionAsync('runCommand', 'editor.action.organizeImport')
+
+" Add (Neo)Vim's native statusline support.
+" NOTE: Please see `:h coc-status` for integrations with external plugins that
+" provide custom statusline: lightline.vim, vim-airline.
+set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+
 " Mappings for CoCList
 " Show all diagnostics.
 nnoremap <silent><nowait> <space>a  :<C-u>CocList diagnostics<cr>
@@ -353,6 +357,13 @@ nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
 nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
+
+" Use F2 key as in QtCreator. (Jumps to the declaration of the symbol)
+nmap <silent> <F2> <Plug>(coc-definition)
+
+" Use F4 key as in QtCreator. (Toggle header and cpp files)
+" map <F4> :write!<CR>:FSHere<CR>
+nmap <silent> <F4> :CocCommand clangd.switchSourceHeader<CR>
 
 " Open new tab by Ctrl+T, close by Ctrl+W after leader key.
 nmap <leader><C-t> :tabnew<CR>
@@ -373,15 +384,8 @@ nmap <leader>O O<esc>
 cmap <C-V> <C-R>+
 cmap <S-Insert> <C-R>+
 
-" Use F2 key as in QtCreator. (Jumps to the declaration of the symbol)
-nmap <silent> <F2> <Plug>(coc-definition)
-
 " Switch highlight.
 map <F3> :set hls!<cr>
-
-" Use F4 key as in QtCreator. (Toggle header and cpp files)
-" map <F4> :write!<CR>:FSHere<CR>
-nmap <silent> <F4> :CocCommand clangd.switchSourceHeader<CR>
 
 " Some plugins shortcuts.
 nmap <C-F> :CtrlSF <C-r><C-w>
@@ -500,7 +504,6 @@ set smartindent         " do clever autoindenting
 set smarttab            " a <Tab> in an indent inserts 'shiftwidth' spaces
 set softtabstop=4       " number of spaces to insert for a <Tab>
 set spelllang=en_us,ru_yo
-set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 set tabstop=8           " number of spaces a <Tab> in the text stands for
 set undodir=~/.vim/undo
 set undofile
