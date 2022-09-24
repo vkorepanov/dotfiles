@@ -122,8 +122,8 @@ let g:ale_linters = {
             \}
 
 " Template settings.
-let g:email=systemlist('git config user.email')[0]
-let g:username=systemlist('git config user.name')[0]
+let g:email=trim(system('git config user.email'))
+let g:username=trim(system('git config user.name'))
 
 " Fzf settings.
 let g:fzf_history_dir = '~/.local/share/fzf-history'
