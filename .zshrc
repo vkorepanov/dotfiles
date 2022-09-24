@@ -122,7 +122,7 @@ function __setup_wayland_vars() {
 
 function run_sway() {
     __setup_wayland_vars
-    dbus-run-session sway --unsupported-gpu
+    exec dbus-run-session sway --unsupported-gpu
 }
 
 # startx if we login on tty6
