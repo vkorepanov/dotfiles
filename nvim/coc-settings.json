@@ -35,8 +35,6 @@
   "signature.triggerSignatureWait": 200,
   "suggest.defaultSortMethod": "alphabetical",
   "suggest.enablePreselect": true,
-  "suggest.enablePreview": true,
-  "suggest.floatEnable": true,
   "suggest.maxCompleteItemCount": 1000,
   "suggest.noselect": false,
   "suggest.triggerAfterInsertEnter": true,

@@ -104,9 +104,6 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 export QT_QPA_PLATFORMTHEME="qt5ct"
 
-export XDG_DATA_DIRS="/home/real/.local/share/flatpak/exports/share:$XDG_DATA_DIRS"
-
-# export GDK_DPI_SCALE=1.65
 function __setup_wayland_vars() {
     export MOZ_ENABLE_WAYLAND=1
     export QT_AUTO_SCREEN_SCALE_FACTOR=1
@@ -117,6 +114,7 @@ function __setup_wayland_vars() {
     export WLR_NO_HARDWARE_CURSORS=1
     export GBM_BACKEND=nvidia-drm
     # export WLR_RENDERER=vulkan
+    export GDK_DPI_SCALE=1.65
     export CHROMIUM_FLAGS="--enable-features=Vulkan --enable-features=VaapiVideoDecoder --enable-features=UseOzonePlatform --enable-gpu-rasterization --enable-zero-copy --ozone-platform=x11"
 }
 
