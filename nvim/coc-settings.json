@@ -19,7 +19,8 @@
   "coc.preferences.bracketEnterImprove": true,
   "coc.preferences.extensionUpdateCheck": "daily",
   "coc.preferences.useQuickfixForLocations": true,
-  "codeLens.enable": true,
+  "codeLens.enable": false,
+  "codeLens.position": "right_align",
   "diagnostic.enableMessage": "always",
   "diagnostic.floatConfig": {
     "focusable": true
@@ -29,8 +30,6 @@
   "diagnostic.virtualTextPrefix": "Coc: ",
   "prettier.semi": false,
   "prettier.singleQuote": true,
-  "rust-client.disableRustup": true,
-  "scss.colorDecorators.enable": true,
   "scss.validate": true,
   "signature.triggerSignatureWait": 200,
   "suggest.defaultSortMethod": "alphabetical",
@@ -39,9 +38,9 @@
   "suggest.noselect": false,
   "suggest.triggerAfterInsertEnter": true,
   "suggest.triggerCompletionWait": 30,
-  "tsserver.formatOnType": true,
   "typescript.format.insertSpaceBeforeFunctionParenthesis": true,
   "typescript.format.semicolons": "remove",
+  "colors.enable": true,
   "languageserver": {
     "haskell": {
       "command": "haskell-language-server-wrapper",
