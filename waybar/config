@@ -52,6 +52,7 @@
     "format": "{}"
   },
   "network": {
+    "interface": "br0",
     "interval": 1,
     "tooltip": false,
     "format-ethernet": "{ifname}: {bandwidthUpOctets:10} {bandwidthDownOctets:10}"
