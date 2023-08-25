@@ -99,8 +99,14 @@ export GPG_TTY="$(tty)"
 
 export FZF_TMUX=1
 export FZF_TMUX_HEIGHT='30%'
-export FZF_DEFAULT_COMMAND='fd --type f'
+export FZF_DEFAULT_COMMAND='fd --type f --strip-cwd-prefix'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_CTRL_R_OPTS="
+  --preview 'echo {}' --preview-window up:3:hidden:wrap
+  --bind 'ctrl-/:toggle-preview'
+  --bind 'ctrl-y:execute-silent(echo -n {2..} | pbcopy)+abort'
+  --color header:italic
+  --header 'Press CTRL-Y to copy command into clipboard'"
 
 export QT_QPA_PLATFORMTHEME="qt5ct"
 
@@ -114,13 +120,14 @@ function __setup_wayland_vars() {
     export WLR_NO_HARDWARE_CURSORS=1
     export GBM_BACKEND=nvidia-drm
     # export WLR_RENDERER=vulkan
-    export GDK_DPI_SCALE=1.65
+    export GDK_DPI_SCALE=1.75
+    export QT_SCALE_FACTOR=1.75
     export CHROMIUM_FLAGS="--enable-features=Vulkan --enable-features=VaapiVideoDecoder --enable-features=UseOzonePlatform --enable-gpu-rasterization --enable-zero-copy --ozone-platform=x11"
 }
 
 function run_sway() {
     __setup_wayland_vars
-    exec dbus-run-session sway --unsupported-gpu
+    exec dbus-run-session sway -V --unsupported-gpu
 }
 
 # startx if we login on tty6
