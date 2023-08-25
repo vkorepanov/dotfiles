@@ -6,6 +6,6 @@
 # Distributed under terms of the MIT license.
 #
 
-device="${1:-alsa_output.pci-0000_0b_00.3.analog-stereo}"
+device="${1:-@DEFAULT_AUDIO_SINK@}"
 
-pactl list sinks | grep -A10 "$device" | head -n10 | grep Volume | head -n1 | grep -o '[0-9]*%' | head -n1 | sed -e 's/%//'
+wpctl get-volume "$device" | grep -o '[0-9.]*' | awk '{print($1 * 100);}'

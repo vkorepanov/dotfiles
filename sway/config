@@ -29,8 +29,6 @@ set $menu bemenu-run -in --tb "#2d2d2d" --tf "#cccccc" --fb "#515151" --ff "#ccc
 # set $browser chromium-browser
 set $browser firefox
 
-set $audioDevice alsa_output.pci-0000_0b_00.3.analog-stereo
-
 set $leftDisplay DP-2
 set $rightDisplay DP-1
 
@@ -149,11 +147,11 @@ seat seat0 xcursor_theme Qogir
     # Open browser
     bindsym $win+Shift+b exec $browser
 
-    bindsym XF86AudioRaiseVolume exec pactl set-sink-volume $audioDevice +2% && echo `~/dev/dotfiles/getVolume.sh $audioDevice` > /tmp/wobpipe
-    bindsym XF86AudioLowerVolume exec pactl set-sink-volume $audioDevice -2% && echo `~/dev/dotfiles/getVolume.sh $audioDevice` > /tmp/wobpipe
+    bindsym XF86AudioRaiseVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%+ && echo `~/dev/dotfiles/getVolume.sh` > /tmp/wobpipe
+    bindsym XF86AudioLowerVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%- && echo `~/dev/dotfiles/getVolume.sh` > /tmp/wobpipe
 
-    bindsym XF86AudioMute exec pactl set-sink-mute $audioDevice toggle
-    bindsym $win+XF86AudioMute exec pactl set-sink-volume $audioDevice 75% && echo `~/dev/dotfiles/getVolume.sh $audioDevice` > /tmp/wobpipe
+    bindsym XF86AudioMute exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle && echo `~/dev/dotfiles/getVolume.sh` > /tmp/wobpipe
+    bindsym $win+XF86AudioMute exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 75% && echo `~/dev/dotfiles/getVolume.sh` > /tmp/wobpipe
 
     bindsym XF86AudioPlay exec playerctl play-pause
     bindsym XF86AudioNext exec playerctl next
@@ -351,5 +349,5 @@ exec systemctl start --user pipewire-pulse.service
 exec QT_SCALE_FACTOR=1 telegram-desktop
 # exec mako
 exec swaync
-exec rm -f $WOBSOCK && mkfifo $WOBSOCK && tail -f $WOBSOCK | wob
+exec_always pkill wob; rm -f $WOBSOCK && mkfifo $WOBSOCK && tail -f $WOBSOCK | wob
 # exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
