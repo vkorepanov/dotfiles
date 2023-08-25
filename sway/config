@@ -50,12 +50,15 @@ default_border pixel 0
 titlebar_border_thickness 0
 #for_window [class="^.*"] floating enable
 
+for_window [title="Firefox — Индикатор общего доступа"] floating enable
+
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
 # output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
-output $leftDisplay bg /usr/share/endeavouros/backgrounds/endeavouros-wallpaper.png fill
-output $rightDisplay bg $HOME/.background_image.png fill
+output * bg /usr/share/endeavouros/backgrounds/endeavouros-wallpaper.png fill
+output * bg /usr/share/endeavouros/backgrounds/eos_wallpapers_classic/EOS-JWST.png fill
+# output $rightDisplay bg $HOME/.background_image.png fill
 #
 # Example configuration:
 #
@@ -70,7 +73,8 @@ output $leftDisplay position 0,0
 # output DP-1 scale 1.62
 # output $rightDisplay scale 2
 # output $leftDisplay scale 2
-output $leftDisplay adaptive_sync on
+
+# output $leftDisplay adaptive_sync on
 
 ### Idle configuration
 #
@@ -156,6 +160,12 @@ seat seat0 xcursor_theme Qogir
     bindsym XF86AudioPrev exec playerctl previous
     bindsym $win+XF86AudioRaiseVolume exec playerctl volume 0.02+
     bindsym $win+XF86AudioLowerVolume exec playerctl volume 0.02-
+
+    # Notifcation center
+    bindsym $win+n exec swaync-client -t
+    bindsym $win+F1 output * dpms off
+    bindsym $win+F2 output * dpms on
+
 #
 # Moving around:
 #
@@ -337,6 +347,9 @@ set $WOBSOCK /tmp/wobpipe
 
 exec systemctl start --user wireplumber
 exec systemctl start --user pipewire-pulse.service
-exec telegram-desktop
-exec mako
+# exec systemctl start --user xdg-desktop-portal-wlr
+exec QT_SCALE_FACTOR=1 telegram-desktop
+# exec mako
+exec swaync
 exec rm -f $WOBSOCK && mkfifo $WOBSOCK && tail -f $WOBSOCK | wob
+# exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
