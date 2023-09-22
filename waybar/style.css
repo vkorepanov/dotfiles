@@ -67,6 +67,10 @@ window#waybar {
     color: #66cccc;
 }
 
+#custom-notification {
+    font-family: "NotoSansMono Nerd Font";
+}
+
 #window,
 #workspaces {
     margin: 0 2px;
