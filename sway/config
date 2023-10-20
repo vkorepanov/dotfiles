@@ -349,5 +349,5 @@ exec systemctl start --user pipewire-pulse.service
 exec QT_SCALE_FACTOR=1 telegram-desktop
 # exec mako
 exec swaync
-exec_always pkill wob; rm -f $WOBSOCK && mkfifo $WOBSOCK && tail -f $WOBSOCK | wob
+exec_always pkill wob || true && rm -f $WOBSOCK && mkfifo $WOBSOCK && tail -f $WOBSOCK | wob
 # exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
