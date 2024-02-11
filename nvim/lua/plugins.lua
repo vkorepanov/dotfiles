@@ -68,6 +68,15 @@ require("lazy").setup({
             })
         end,
     },
+    {
+        "NeogitOrg/neogit",
+        dependencies = {
+            "nvim-lua/plenary.nvim", -- required
+            "sindrets/diffview.nvim", -- optional - Diff integration
+            "nvim-telescope/telescope.nvim", -- optional
+        },
+        config = true,
+    },
     "lewis6991/gitsigns.nvim",
     "hrsh7th/cmp-nvim-lsp",
     "hrsh7th/cmp-buffer",
