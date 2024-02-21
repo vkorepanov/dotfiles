@@ -86,6 +86,7 @@ require("lazy").setup({
     "hrsh7th/cmp-vsnip",
     "hrsh7th/vim-vsnip",
     "petertriho/cmp-git",
+    "ray-x/lsp_signature.nvim",
 })
 
 vim.cmd.colorscheme("kanagawa-dragon")
@@ -93,6 +94,7 @@ vim.cmd.colorscheme("kanagawa-dragon")
 require("gitsigns").setup()
 require("lualine").setup()
 require("mason").setup()
+require("lsp_signature").setup()
 
 local builtin = require("telescope.builtin")
 vim.keymap.set("n", "<leader>ff", builtin.find_files, {})
