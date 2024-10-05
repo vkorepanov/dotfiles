@@ -20,6 +20,14 @@ require("lazy").setup({
     },
     "williamboman/mason.nvim",
     "williamboman/mason-lspconfig.nvim",
+    "folke/neodev.nvim",
+    "mfussenegger/nvim-dap",
+    "mfussenegger/nvim-lint",
+    "jay-babu/mason-nvim-dap.nvim",
+    {
+        "rcarriga/nvim-dap-ui",
+        dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" },
+    },
     {
         "stevearc/conform.nvim",
         opts = {},
@@ -35,6 +43,7 @@ require("lazy").setup({
             local configs = require("nvim-treesitter.configs")
 
             configs.setup({
+                auto_install = true,
                 ensure_installed = {
                     "bash",
                     "c",
@@ -91,9 +100,79 @@ require("lazy").setup({
 
 vim.cmd.colorscheme("kanagawa-dragon")
 
+require("neodev").setup()
 require("gitsigns").setup()
-require("lualine").setup()
+require("lualine").setup({})
 require("mason").setup()
+require("mason-nvim-dap").setup({
+    ensure_installed = {
+        "bash",
+        "codelldb",
+        "delve",
+        "firefox",
+        "python",
+    },
+    automatic_installation = true,
+    handlers = {
+        function(config)
+            -- all sources with no handler get passed here
+            -- Keep original functionality
+            require("mason-nvim-dap").default_setup(config)
+        end,
+        cpp = function(config)
+            config.adapters = {
+                name = "Launch",
+                type = "cpp",
+                request = "launch",
+                program = function()
+                    return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+                end,
+                cwd = "${workspaceFolder}",
+                runInTerminal = true,
+            }
+
+            require("mason-nvim-dap").default_setup(config)
+        end,
+        python = function(config)
+            config.adapters = {
+                type = "executable",
+                command = "/usr/bin/python3",
+                args = {
+                    "-m",
+                    "debugpy.adapter",
+                },
+            }
+            require("mason-nvim-dap").default_setup(config)
+        end,
+    },
+})
+vim.keymap.set("n", "<F7>", function()
+    require("dap").continue()
+end)
+
+vim.keymap.set("n", "<F8>", function()
+    require("dap").toggle_breakpoint()
+end)
+
+vim.keymap.set("n", "<F10>", function()
+    require("dap").step_over()
+end)
+
+vim.keymap.set("n", "<F11>", function()
+    require("dap").step_into()
+end)
+
+vim.keymap.set("n", "<F12>", function()
+    require("dap").step_out()
+end)
+
+vim.keymap.set("n", "<leader>u", function()
+    require("dap").up()
+end)
+vim.keymap.set("n", "<leader>d", function()
+    require("dap").down()
+end)
+
 require("lsp_signature").setup()
 
 local builtin = require("telescope.builtin")
@@ -109,7 +188,7 @@ conform.setup({
         javascript = { "prettier" },
         json = { "jq" },
         lua = { "stylua" },
-        python = { "isort", "black" },
+        python = { "isort", "autopep8" },
         typescript = { "prettier" },
     },
 })
@@ -207,7 +286,6 @@ mason_lspconfig.setup({
         "marksman",
         "pyright",
         "rust_analyzer",
-        "tsserver",
         "volar",
         "yamlls",
     },
@@ -215,9 +293,20 @@ mason_lspconfig.setup({
 
 mason_lspconfig.setup_handlers({
     function(server_name)
-        require("lspconfig")[server_name].setup({ capabilities = capabilities })
+        require("lspconfig")[server_name].setup({ capabilities = capabilities, inlay_hints = true })
     end,
 })
+
+local dapui = require("dapui")
+dapui.setup()
+vim.keymap.set("n", "<leader>dbg", function()
+    dapui.toggle()
+end)
+
+require("lint").linters_by_ft = {
+    markdown = { "vale" },
+    python = { "pylint" },
+}
 
 -- Use LspAttach autocommand to only map the following keys
 -- after the language server attaches to the current buffer
@@ -243,6 +332,14 @@ vim.api.nvim_create_autocmd("LspAttach", {
         vim.keymap.set("n", "<leader>lf", function()
             vim.lsp.buf.format({ async = true })
         end, opts)
+    end,
+})
+
+vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+    callback = function()
+        -- try_lint without arguments runs the linters defined in `linters_by_ft`
+        -- for the current filetype
+        require("lint").try_lint()
     end,
 })
 
