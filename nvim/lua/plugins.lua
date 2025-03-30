@@ -380,5 +380,10 @@ vim.api.nvim_create_autocmd({ "BufWritePost" }, {
     end,
 })
 
+vim.diagnostic.config({
+    virtual_lines = true
+})
+
+
 vim.o.updatetime = 250
 vim.cmd([[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]])
