@@ -323,15 +323,8 @@ mason_lspconfig.setup({
         "marksman",
         "pyright",
         "rust_analyzer",
-        "volar",
         "yamlls",
     },
-})
-
-mason_lspconfig.setup_handlers({
-    function(server_name)
-        require("lspconfig")[server_name].setup({ capabilities = capabilities, inlay_hints = true })
-    end,
 })
 
 local dapui = require("dapui")
