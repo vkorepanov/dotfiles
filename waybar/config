@@ -33,7 +33,6 @@
         "custom/storage",
         "memory",
         "cpu",
-        "battery",
         "network",
         "hyprland/language",
         "wireplumber",
@@ -105,7 +104,7 @@
 
     "memory": {
         "interval": 30,
-        "format": "  {used:0.2f} / {total:0.0f} GB",
+        "format": "  {used:0.2f} / {total:0.1f} (+{swapUsed:0.1f}) GB",
         "on-click": "alacritty -e btop"
     },
 
@@ -128,7 +127,7 @@
         ]
     },
     "network": {
-        "interface": "br0",
+        "interface": "enp196s0",
         "format-wifi": " {essid} ({signalStrength}%)",
         // "format-ethernet": "{ifname}: {ipaddr}/{cidr} ",
         "format-ethernet": "{ifname}: {bandwidthUpOctets:10} {bandwidthDownOctets:10} ",
