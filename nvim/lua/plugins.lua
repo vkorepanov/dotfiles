@@ -47,43 +47,6 @@ require("lazy").setup({
     {
         "nvim-treesitter/nvim-treesitter",
         build = ":TSUpdate",
-        config = function()
-            local configs = require("nvim-treesitter.configs")
-
-            configs.setup({
-                auto_install = true,
-                ensure_installed = {
-                    "bash",
-                    "c",
-                    "cmake",
-                    "cpp",
-                    "css",
-                    "cuda",
-                    "dockerfile",
-                    "glsl",
-                    "html",
-                    "javascript",
-                    "json",
-                    "jsonc",
-                    "lua",
-                    "make",
-                    "markdown",
-                    "meson",
-                    "pug",
-                    "python",
-                    "rust",
-                    "scss",
-                    "toml",
-                    "typescript",
-                    "vue",
-                    "xml",
-                    "yaml",
-                },
-                sync_install = false,
-                highlight = { enable = true },
-                indent = { enable = true },
-            })
-        end,
     },
     {
         "NeogitOrg/neogit",
@@ -108,6 +71,33 @@ require("lazy").setup({
 
 vim.cmd.colorscheme("kanagawa-dragon")
 
+require'nvim-treesitter'.install {
+    "bash",
+    "c",
+    "cmake",
+    "cpp",
+    "css",
+    "cuda",
+    "dockerfile",
+    "glsl",
+    "html",
+    "javascript",
+    "json",
+    "lua",
+    "make",
+    "markdown",
+    "meson",
+    "pug",
+    "python",
+    "rust",
+    "scss",
+    "toml",
+    "typescript",
+    "vue",
+    "xml",
+    "yaml",
+}
+
 require("neodev").setup()
 require("gitsigns").setup()
 require("lualine").setup({})
@@ -125,20 +115,6 @@ require("mason-nvim-dap").setup({
         function(config)
             -- all sources with no handler get passed here
             -- Keep original functionality
-            require("mason-nvim-dap").default_setup(config)
-        end,
-        cpp = function(config)
-            config.adapters = {
-                name = "Launch",
-                type = "cpp",
-                request = "launch",
-                program = function()
-                    return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
-                end,
-                cwd = "${workspaceFolder}",
-                runInTerminal = true,
-            }
-
             require("mason-nvim-dap").default_setup(config)
         end,
         python = function(config)
@@ -217,26 +193,12 @@ vim.keymap.set({ "n", "v" }, "<leader>f", ":Format<CR>", {})
 
 local cmp = require("cmp")
 local cmp_autopairs = require("nvim-autopairs.completion.cmp")
-local ts_utils = require("nvim-treesitter.ts_utils")
 local ts_node_func_parens_disabled = {
   -- ecma
   named_imports = true,
   -- rust
   use_declaration = true,
 }
-
-local default_handler = cmp_autopairs.filetypes["*"]["("].handler
-cmp_autopairs.filetypes["*"]["("].handler = function(char, item, bufnr, rules, commit_character)
-  local node_type = ts_utils.get_node_at_cursor():type()
-  if ts_node_func_parens_disabled[node_type] then
-    if item.data then
-      item.data.funcParensDisabled = true
-    else
-      char = ""
-    end
-  end
-  default_handler(char, item, bufnr, rules, commit_character)
-end
 
 cmp.setup({
     snippet = {
@@ -351,7 +313,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
         local opts = { buffer = ev.buf }
         vim.keymap.set("n", "<F2>", vim.lsp.buf.definition, opts)
         vim.keymap.set("n", "<F3>", vim.lsp.buf.declaration, opts)
-        vim.keymap.set("n", "<F4>", ":ClangdSwitchSourceHeader<CR>", opts)
+        vim.keymap.set("n", "<F4>", ":LspClangdSwitchSourceHeader<CR>", opts)
         vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
         vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
         vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, opts)
