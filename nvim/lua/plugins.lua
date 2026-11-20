@@ -24,146 +24,60 @@ require("lazy").setup({
         "windwp/nvim-autopairs",
         event = "InsertEnter",
         config = true,
-        -- use opts = {} for passing setup options
-        -- this is equivalent to setup({}) function
         opts = {},
     },
     "folke/neodev.nvim",
-    "mfussenegger/nvim-dap",
     "mfussenegger/nvim-lint",
-    "jay-babu/mason-nvim-dap.nvim",
-    {
-        "rcarriga/nvim-dap-ui",
-        dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" },
-    },
     {
         "stevearc/conform.nvim",
         opts = {},
     },
     {
-        "nvim-telescope/telescope.nvim",
-        dependencies = { "nvim-lua/plenary.nvim" },
-    },
-    {
-        "nvim-treesitter/nvim-treesitter",
-        build = ":TSUpdate",
-    },
-    {
         "NeogitOrg/neogit",
         dependencies = {
             "nvim-lua/plenary.nvim", -- required
-            "sindrets/diffview.nvim", -- optional - Diff integration
-            "nvim-telescope/telescope.nvim", -- optional
+            "sindrets/diffview.nvim", -- optional - diff integration
+            "ibhagwan/fzf-lua", -- optional - fzf-lua picker
         },
-        config = true,
+        opts = {
+            integrations = {
+                fzf_lua = true,
+            },
+        },
     },
     "lewis6991/gitsigns.nvim",
-    "hrsh7th/cmp-nvim-lsp",
-    "hrsh7th/cmp-buffer",
-    "hrsh7th/cmp-path",
-    "hrsh7th/cmp-cmdline",
-    "hrsh7th/nvim-cmp",
-    "hrsh7th/cmp-vsnip",
-    "hrsh7th/vim-vsnip",
-    "petertriho/cmp-git",
-    "ray-x/lsp_signature.nvim",
+    {
+        "Saghen/blink.cmp",
+        dependencies = { "saghen/blink.lib" },
+        build = function()
+            require("blink.cmp").build():pwait()
+        end,
+    },
+    "ibhagwan/fzf-lua",
 })
 
 vim.cmd.colorscheme("kanagawa-dragon")
 
-require'nvim-treesitter'.install {
-    "bash",
-    "c",
-    "cmake",
-    "cpp",
-    "css",
-    "cuda",
-    "dockerfile",
-    "glsl",
-    "html",
-    "javascript",
-    "json",
-    "lua",
-    "make",
-    "markdown",
-    "meson",
-    "pug",
-    "python",
-    "rust",
-    "scss",
-    "toml",
-    "typescript",
-    "vue",
-    "xml",
-    "yaml",
-}
-
 require("neodev").setup()
 require("gitsigns").setup()
-require("lualine").setup({})
-require("mason").setup()
-require("mason-nvim-dap").setup({
-    ensure_installed = {
-        "bash",
-        "codelldb",
-        "delve",
-        "firefox",
-        "python",
-    },
-    automatic_installation = true,
-    handlers = {
-        function(config)
-            -- all sources with no handler get passed here
-            -- Keep original functionality
-            require("mason-nvim-dap").default_setup(config)
-        end,
-        python = function(config)
-            config.adapters = {
-                type = "executable",
-                command = "/usr/bin/python3",
-                args = {
-                    "-m",
-                    "debugpy.adapter",
-                },
-            }
-            require("mason-nvim-dap").default_setup(config)
-        end,
-    },
+require("lualine").setup({
+    sections = { lualine_x = { "lsp_status", "filetype" } },
 })
-vim.keymap.set("n", "<F7>", function()
-    require("dap").continue()
-end)
-
-vim.keymap.set("n", "<F8>", function()
-    require("dap").toggle_breakpoint()
-end)
-
-vim.keymap.set("n", "<F10>", function()
-    require("dap").step_over()
-end)
-
-vim.keymap.set("n", "<F11>", function()
-    require("dap").step_into()
-end)
-
-vim.keymap.set("n", "<F12>", function()
-    require("dap").step_out()
-end)
-
-vim.keymap.set("n", "<leader>u", function()
-    require("dap").up()
-end)
-vim.keymap.set("n", "<leader>d", function()
-    require("dap").down()
-end)
-
-require("lsp_signature").setup()
-
-local builtin = require("telescope.builtin")
-vim.keymap.set("n", "<leader>ff", builtin.find_files, {})
-vim.keymap.set("n", "<leader>fg", builtin.live_grep, {})
-vim.keymap.set("n", "<leader>fb", builtin.buffers, {})
-vim.keymap.set("n", "<leader>fh", builtin.help_tags, {})
+require("mason").setup()
+-- Fuzzy finding (fzf-lua replaces telescope)
+local fzf_lua = require("fzf-lua")
+vim.keymap.set("n", "<leader>ff", function()
+    fzf_lua.files({})
+end, { desc = "Find files" })
+vim.keymap.set("n", "<leader>fg", function()
+    fzf_lua.live_grep()
+end, { desc = "Live grep" })
+vim.keymap.set("n", "<leader>fb", function()
+    fzf_lua.buffers()
+end, { desc = "Buffers" })
+vim.keymap.set("n", "<leader>fh", function()
+    fzf_lua.help_tags()
+end, { desc = "Help tags" })
 
 local conform = require("conform")
 conform.setup({
@@ -191,84 +105,19 @@ end, { range = true })
 
 vim.keymap.set({ "n", "v" }, "<leader>f", ":Format<CR>", {})
 
-local cmp = require("cmp")
-local cmp_autopairs = require("nvim-autopairs.completion.cmp")
-local ts_node_func_parens_disabled = {
-  -- ecma
-  named_imports = true,
-  -- rust
-  use_declaration = true,
-}
-
-cmp.setup({
-    snippet = {
-        -- REQUIRED - you must specify a snippet engine
-        expand = function(args)
-            vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
-            -- require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
-            -- require('snippy').expand_snippet(args.body) -- For `snippy` users.
-            -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
-        end,
-    },
-    window = {
-        -- completion = cmp.config.window.bordered(),
-        -- documentation = cmp.config.window.bordered(),
-    },
-    mapping = cmp.mapping.preset.insert({
-        ["<C-b>"] = cmp.mapping.scroll_docs(-4),
-        ["<C-f>"] = cmp.mapping.scroll_docs(4),
-        ["<C-Space>"] = cmp.mapping.complete(),
-        ["<C-e>"] = cmp.mapping.abort(),
-        ["<CR>"] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-    }),
-    sources = cmp.config.sources({
-        { name = "nvim_lsp" },
-        { name = "vsnip" }, -- For vsnip users.
-        -- { name = 'luasnip' }, -- For luasnip users.
-        -- { name = 'ultisnips' }, -- For ultisnips users.
-        -- { name = 'snippy' }, -- For snippy users.
-    }, {
-        { name = "buffer" },
-    }),
-})
-
-cmp.event:on(
-  "confirm_done",
-  cmp_autopairs.on_confirm_done({
-    sh = false,
-  })
-)
-
--- Set configuration for specific filetype.
-cmp.setup.filetype("gitcommit", {
-    sources = cmp.config.sources({
-        { name = "git" }, -- You can specify the `git` source if [you were installed it](https://github.com/petertriho/cmp-git).
-    }, {
-        { name = "buffer" },
-    }),
-})
-
--- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
-cmp.setup.cmdline({ "/", "?" }, {
-    mapping = cmp.mapping.preset.cmdline(),
-    sources = {
-        { name = "buffer" },
+-- Completion: replaces nvim-cmp + vim-vsnip + cmp-git + cmp-cmdline.
+-- v2 defaults take no <CR> (accept is <C-y>); restore the old cmp feel with documented action names.
+-- Brackets balance natively on accept (auto_brackets, default on) - no autopairs confirm_done hook to re-point.
+require("blink.cmp").setup({
+    keymap = {
+        ["<Tab>"] = { "select_next", "snippet_forward", "fallback" },
+        ["<S-Tab>"] = { "select_prev", "snippet_backward", "fallback" },
+        ["<CR>"] = { "accept", "fallback" },
     },
 })
 
--- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
-cmp.setup.cmdline(":", {
-    mapping = cmp.mapping.preset.cmdline(),
-    sources = cmp.config.sources({
-        { name = "path" },
-    }, {
-        { name = "cmdline" },
-    }),
-})
-
--- Set up lspconfig.
-local capabilities = require("cmp_nvim_lsp").default_capabilities()
-
+-- LSP: server configs come from nvim-lspconfig (auto-merged into vim.lsp.config).
+-- mason installs the packages; the core enables the servers for their filetypes.
 local mason_lspconfig = require("mason-lspconfig")
 mason_lspconfig.setup({
     ensure_installed = {
@@ -279,21 +128,34 @@ mason_lspconfig.setup({
         "docker_compose_language_service",
         "dockerls",
         "html",
-        -- "java_language_server",
         "jsonls",
         "lua_ls",
         "marksman",
         "pyright",
         "rust_analyzer",
+        "taplo",
+        "ts_ls",
         "yamlls",
     },
 })
 
-local dapui = require("dapui")
-dapui.setup()
-vim.keymap.set("n", "<leader>dbg", function()
-    dapui.toggle()
-end)
+vim.lsp.enable({
+    "bashls",
+    "clangd",
+    "cmake",
+    "cssls",
+    "docker_compose_language_service",
+    "dockerls",
+    "html",
+    "jsonls",
+    "lua_ls",
+    "marksman",
+    "pyright",
+    "rust_analyzer",
+    "taplo",
+    "ts_ls",
+    "yamlls",
+})
 
 require("lint").linters_by_ft = {
     markdown = { "vale" },
@@ -322,7 +184,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
         vim.keymap.set({ "n", "v" }, "<leader>a", vim.lsp.buf.code_action, opts)
         vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
         vim.keymap.set("n", "<leader>lf", function()
-            vim.lsp.buf.format({ async = true })
+            vim.lsp.buf.format()
         end, opts)
     end,
 })
@@ -336,9 +198,11 @@ vim.api.nvim_create_autocmd({ "BufWritePost" }, {
 })
 
 vim.diagnostic.config({
-    virtual_lines = true
+    virtual_lines = true,
 })
 
-
-vim.o.updatetime = 250
-vim.cmd([[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]])
+vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+    callback = function()
+        vim.diagnostic.open_float(nil, { focus = false })
+    end,
+})
