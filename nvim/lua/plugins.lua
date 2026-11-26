@@ -123,7 +123,6 @@ mason_lspconfig.setup({
     ensure_installed = {
         "bashls",
         "clangd",
-        "cmake",
         "cssls",
         "docker_compose_language_service",
         "dockerls",
@@ -142,7 +141,6 @@ mason_lspconfig.setup({
 vim.lsp.enable({
     "bashls",
     "clangd",
-    "cmake",
     "cssls",
     "docker_compose_language_service",
     "dockerls",
